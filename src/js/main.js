@@ -6,5 +6,11 @@ var get_parsed_data = function () {
 };
 
 $(document).ready(function(){
-    console.log(get_parsed_data());
+    // Example usage
+    var data = get_parsed_data().data;
+    var i;
+
+    for(i = 0; i < data.length; ++i){
+        console.log(data[i].BusinessName);
+    }
 });
