@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Data collection using Google Places</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+.box {
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px;
+	width: 200px;
+}
+      #map {
+        height: 0%;
+      }
+    </style>
+    <script>
+
+function initMap() {
+  var coordinates = {lat: 55.8735672, lng: -4.2925851};
+
+	var service = new google.maps.places.PlacesService(new google.maps.Map(document.getElementById('map')));
+
+  service.nearbySearch({ //here is where to input some rudimentary data
+    location: coordinates, // change coordinates
+    radius: 5000, //radius - determine later
+    types: ['food','cafe'],
+	keyword: "indian" //cuizine type
+  }, callback);
+}
+
+function callback(results, status) { //here we need to generate the specific score for each place
+  if (status === google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+	if (results[i].permanently_closed) continue;
+	var price = "";
+	var rating = "";
+	if (results[i].rating != undefined) {rating = results[i].rating+"*";}
+	if (results[i].price_level != undefined) {price = results[i].price_level+"£";}
+	document.getElementById('list').innerHTML += '<div class="box">' + results[i].name + "<br>" + rating + "<br>" + price + "</div>";
+    }
+  }
+}
+    </script>
+  </head>
+  <body>
+	<div id='list'></div>
+	<div hidden id='map'></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms&signed_in=true&libraries=places&callback=initMap" async defer></script>
+  </body>
+</html>
