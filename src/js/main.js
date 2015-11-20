@@ -1,4 +1,6 @@
 var GOOGLE_MAPS_API_KEY = "AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms";
+var map;
+var pos_marker;
 
 var get_parsed_data = function () {
     return Papa.parse(csv_data, {
@@ -7,27 +9,43 @@ var get_parsed_data = function () {
     });
 };
 
-
-var map;
 function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 55.8628, lng: -4.2542},
-    zoom: 14
-  });
+    var latlng = {lat: 55.8628, lng: -4.2542}
+    
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: latlng,
+        zoom: 14
+    });
+    
+    pos_marker = new google.maps.Marker({
+        position: latlng,
+        map: map,
+        draggable: true,
+        title: 'Location'
+    });
+}
+
+var toggle_map = function(){
+    map_div = $("#map");    
+    var visibility = map_div.css("visibility");
+
+    if (visibility == "hidden"){
+        map_div.css("visibility","visible")
+            .hide()
+            .slideDown("slow");        
+        $(".set-location").html("Set Location &#9650;");
+    }
+    else {
+        map_div.slideUp("slow", function(){
+            $(this).css("visibility", "hidden");
+        });
+        $(".set-location").html("Set Location &#9660;");
+    }
 }
 
 
-var toggle_map = function(){
-    var visibility = $("#map").css("visibility");
-
-    if (visibility == "hidden"){
-        $("#map").css("visibility","visible");
-        $(".set-location").html("Set Location &#9650;")
-    }
-    else {
-        $("#map").css("visibility","hidden");
-        $(".set-location").html("Set Location &#9660;")
-    }
+var get_user_location = function(){
+    return pos_marker.getPosition();
 }
 
 $(document).ready(function(){
@@ -39,7 +57,8 @@ $(document).ready(function(){
         console.log(data[i].BusinessName);
     }
     
+    
     $(".set-location").click(function(){
         toggle_map();
-    });
+    });    
 });
