@@ -1,8 +1,10 @@
+<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <title>120°</title>
+    <link rel="stylesheet" href="../css/main.css" type="text/css">
 </head>
 <body>
     <div>
@@ -11,11 +13,17 @@
         </p>
     </div>
 
+    <div id="map"></div>
+
     <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="../../bower_components/react/react.min.js"></script>
     <script type="text/javascript" src="../../bower_components/papaparse/papaparse.min.js"></script>
     <script type="text/javascript" src="../js/restaurants.js"></script>
     <script type="text/javascript" src="../js/main.js"></script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms&callback=initMap">
+    </script>
+
 </body>
 
 </html>
