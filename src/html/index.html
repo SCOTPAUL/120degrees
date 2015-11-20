@@ -5,15 +5,20 @@
     <meta charset="utf-8">
     <title>120°</title>
     <link rel="stylesheet" href="../css/main.css" type="text/css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <div>
-        <p>
-            Hello World
-        </p>
+    
+    <div id="main-container" class="pure-g">
+        <div class="pure-u-1-2"><p>Placeholder</p></div>
+        <div id="map-container" class="pure-u-1-2">
+            <button type="button" class="pure-button set-location">Set Location &#9660;</button>
+            <div id="map"></div>
+        </div>
     </div>
-
-    <div id="map"></div>
+    
+    
 
     <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="../../bower_components/react/react.min.js"></script>

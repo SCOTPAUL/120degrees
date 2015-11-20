@@ -11,11 +11,24 @@ var get_parsed_data = function () {
 var map;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 55.8628, lng: 4.2542},
-    zoom: 8
+    center: {lat: 55.8628, lng: -4.2542},
+    zoom: 14
   });
 }
 
+
+var toggle_map = function(){
+    var visibility = $("#map").css("visibility");
+
+    if (visibility == "hidden"){
+        $("#map").css("visibility","visible");
+        $(".set-location").html("Set Location &#9650;")
+    }
+    else {
+        $("#map").css("visibility","hidden");
+        $(".set-location").html("Set Location &#9660;")
+    }
+}
 
 $(document).ready(function(){
     // Example usage
@@ -25,4 +38,8 @@ $(document).ready(function(){
     for(i = 0; i < data.length; ++i){
         console.log(data[i].BusinessName);
     }
+    
+    $(".set-location").click(function(){
+        toggle_map();
+    });
 });
