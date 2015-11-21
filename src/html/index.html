@@ -9,15 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    
+
     <div id="main-container" class="pure-g">
         <div class="pure-u-1-2"><p>Placeholder</p></div>
         <div id="map-container" class="pure-u-1-2">
-            <button type="button" class="pure-button set-location">Set Location &#9660;</button>
+            <button type="button" class="pure-button set-location"><span id="location"></span> | <span id="set-location-text">Set Location &#9660;</span></button>
             <div id="map"></div>
         </div>
     </div>
-    
+
     <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="../../bower_components/react/react.min.js"></script>
     <script type="text/javascript" src="../../bower_components/papaparse/papaparse.min.js"></script>
@@ -26,7 +26,7 @@
     <script defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms&callback=initMap">
     </script>
-    
+
 
 </body>
 
