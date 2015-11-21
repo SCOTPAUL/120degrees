@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="CoffeeCup HTML Editor (www.coffeecup.com)">
+    <meta name="dcterms.created" content="Fri, 27 Jun 2014 21:02:23 GMT">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <title></title>
+
+    <!--[if IE]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+    a
+    {
+      position:  absolute;
+      left: 0;
+      top: 0; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
+      width: 200px;
+      background: rgba(255,255,255,0.66);
+      border: 2px  solid rgba(0,0,0,0.5);
+      border-radius: 4px; padding: 8px;
+    }
+    </style>
+    <script>
+
+
+    function drag_start(event)
+    {
+    var style = window.getComputedStyle(event.target, null);
+    var str = (parseInt(style.getPropertyValue("left")) - event.clientX) + ',' + (parseInt(style.getPropertyValue("top")) - event.clientY)+ ',' + event.target.id;
+    event.dataTransfer.setData("Text",str);
+    }
+
+    function drop(event)
+    {
+    var offset = event.dataTransfer.getData("Text").split(',');
+    var dm = document.getElementById(offset[2]);
+    dm.style.left = (event.clientX + parseInt(offset[0],10)) + 'px';
+    dm.style.top = (event.clientY + parseInt(offset[1],10)) + 'px';
+
+    event.preventDefault();
+    return false;
+    }
+
+    function drag_over(event)
+    {
+    event.preventDefault();
+    return false;
+    }
+
+    function getOffsetRect(elem) {
+      var p = $(elem);
+      var position = p.position();
+      var $item = $(body);
+      var bodyOffset = $item.offset()
+      var bitToAdd = p.width()/2
+      var width1 = $item.width();
+      var midpoint = (width1 +  bodyOffset.left )/ 2;
+      var difference = (position.left + bitToAdd) - midpoint;
+      var divPos = $("#pinboard").offset();
+      var score = difference / (midpoint - divPos.left);
+      if (score < -1) {
+	 score = -1
+      }
+      if (score > 1) {
+	score = 1
+      }
+      $( "#text" ).append( "<br>id = " + elem.id + " || left: " + position.left + " || score: " + score + " || divPos: " + divPos.left + " || bitToAdd " + bitToAdd);
+    }
+
+    function getWidth(elem) {
+      var $this = $(body);
+      var width = $this.width();
+      $( "#text" ).text( "midpoint = " + width/2 );
+    }
+
+    </script>
+  </head>
+  <body id="body">
+   <ul>
+          <a id="txt1" draggable="true" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)"> Item 1 </a><br>
+          <a id="txt2" draggable="true" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)"> Item 2 </a>
+  </ul>
+      <div id="pinboard" ondrop="drop(event)" ondragover="drag_over(event)" style="border: 3px solid rgba(0,0,0,0.5); height: 10vh; width: 60vw; margin: auto">
+        <h2 style="text-align:center">Drag items here</h2>
+        <p style="float:right">High score: 1</p>
+        <p style="float: left">Low score: -1</p>
+      </div>
+      <div id="display" style="border: 3px solid rgba(0,0,0,0.5); height: 400px; width: 100%">
+	<p id="text"> LOG: </p>
+	<button onclick="getWidth(this.id)">click me!</button>
+      </div>
+      <div id="explanation">
+        <h1><u>Explanation</u></h1>
+        <p>Basically this page is just to practice moving around 2 items onto a pinboard and displaying how the score is calculated
+        Sum performed is: <br><br>
+        <i><b>(</b>X-position of center of item - X-position of center of display (adjustable) + (1/2*item width)<b>)</b> / (X-position of center - X-position from left edge to pinboard)</i>
+        </p>
+      </div>
+
+  </body>
