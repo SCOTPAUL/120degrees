@@ -14,7 +14,7 @@
 <script type="text/javascript" src="http://d3js.org/d3.hexbin.v0.min.js"></script>	
 <script>
 
-var data = ["a", "b", "c", "d", "e"];
+var data = [["a", 1], ["b", 5], ["c", 10], ["d", 15], ["e", 20]];
 
 
 function mover(d) {
@@ -35,9 +35,9 @@ function mout(d){
 
 //Trying to enlarge hexagon when it is clicked
 function mclick(d) {
-	var e1 = d3.select(this)
+	//var e1 = d3.select(this)
 		//.attr("radius", 200);
-		.attr("transform", "scale(1.5)");
+	d3.select(this).attr("transform", "scale(1.5)");
 }
 
 	
@@ -51,7 +51,7 @@ var points = [];
 var a = [];
 for (var i = 0; i < data.length; i++) {
         points.push([radius * i * 1.75, height*0.5]);
-	a.push([[radius * i * 1.75, height*0.5],data[i]]);
+	a.push([[radius * i * 1.75, height*0.5],data[i][0]]);
 }
 
 //Not working - tried to make each hexagon a different shade
@@ -83,11 +83,11 @@ svg.append("g")
     .data(hexbin(points))
     .enter().append("path")
     .attr("class", "hexagon")
-    .style("fill", function(d) { return "steelblue"; })
+    .style("fill", function(d, i) { return color(data[i][1]);})
     .attr("d", function (d) { return "M" + d.x + "," + d.y + hexbin.hexagon();})
     .on("mouseover", mover)
     .on("mouseout",mout)
-	.on("click", mclick);
+    .on("click", mclick);
 
 //adds text to the hexagon
 svg.selectAll("text")
