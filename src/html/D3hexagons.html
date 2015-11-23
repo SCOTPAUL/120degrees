@@ -52,11 +52,9 @@ var margin = {top: 40, right: 40, bottom: 40, left: 40},
 	
 //Calculate the center positions of each hexagon 
 var points = [];
-var buttons = []
 var a = [];
 for (var i = 0; i < data.length; i++) {
-        points.push([radius * i * 1.75, height*0.5]);
-	buttons.push([(radius * i * 1.75) - 20, (height*0.5) + 20])
+    points.push([radius * i * 1.75, height*0.5]);
 	a.push([[radius * i * 1.75, height*0.5],data[i][0]]);
 }
 
@@ -80,7 +78,6 @@ var y = d3.scale.linear()
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 //Draw the hexagons
@@ -115,33 +112,34 @@ svg.selectAll("text")
 
 //adds buttons
 svg.selectAll("rect")
-   .data(buttons)
+   .data(points)
    .enter()
    .append("rect")
    .attr("width", 50)
    .attr("height", 30)
    .attr("x", function(d) {
-	return d[0];
+	return (d[0] - 20);
    })
    .attr("y", function(d) {
-	return d[1];
+	return (d[1] + 20);
    })
    .attr("fill", "gainsboro")
    .on("click", buttonclick);
 
 //not working - should add text to buttons
-var buttons = svg.selectAll("rect")
-   .data(buttons)
-buttons.append("text")
+svg.selectAll("g")
+   .data(points)
+   .enter()
+   .append("text")
+   .text("Order")
    .attr("x", function(d) {
-	return d[0];
+	return (d[0] - 15);
    })
    .attr("y", function(d) {
-	return d[1];
+	return (d[1] + 40);
    })
    .attr("font-family", "sans-serif")
-   .attr("font-size", "11px")
-   .text("Order");
+   .attr("font-size", "11px");
 
 </script>
 
