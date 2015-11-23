@@ -34,11 +34,22 @@ function mout(d){
 	   ;
 }
 
-//Trying to enlarge hexagon when it is clicked
+//enlarge hexagon when it is clicked
+var click = 0;
 function mclick(d) {
-	//var e1 = d3.select(this)
-		//.attr("radius", 200);
-	d3.select(this).attr("transform", "scale(1.5)");
+	var e1 = d3.select(this)
+	if (click == 0) {
+		click = 1;
+	    e1.transition()
+		.attr("transform", "scale(1.75)")
+		.attr("d", function (d) { return "M" + (d.x)/1.75 + "," + (d.y)/1.75 + hexbin.hexagon();});
+	}
+	else {
+		click = 0;
+	    e1.transition()
+		.attr("transform", "scale(1)")
+		.attr("d", function (d) { return "M" + (d.x) + "," + (d.y) + hexbin.hexagon();});
+	}
 }
 
 function buttonclick(d){
@@ -58,7 +69,7 @@ for (var i = 0; i < data.length; i++) {
 	a.push([[radius * i * 1.75, height*0.5],data[i][0]]);
 }
 
-//Not working - tried to make each hexagon a different shade
+//make each hexagon a different shade
 var color = d3.scale.linear()
     .domain([0, 20])
     .range(["white", "steelblue"])
@@ -126,7 +137,7 @@ svg.selectAll("rect")
    .attr("fill", "gainsboro")
    .on("click", buttonclick);
 
-//not working - should add text to buttons
+//adds text to buttons
 svg.selectAll("g")
    .data(points)
    .enter()
