@@ -2,13 +2,6 @@ var GOOGLE_MAPS_API_KEY = "AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms";
 var map;
 var pos_marker;
 
-var get_parsed_data = function () {
-    return Papa.parse(csv_data, {
-        newline: "",
-        header: true
-    });
-};
-
 var initMap = function() {
     var latlng = {lat: 55.8628, lng: -4.2542}
 
@@ -97,10 +90,42 @@ var reverseGeocodeMarker = function(geocoder, map, textbox){
 
 $(document).ready(function(){
     // Example usage
-    var data = get_parsed_data().data;
     var i;
 
     $(".set-location").click(function(){
         toggle_map();
     });
+    
+    
+    var cuisines = ["American",
+                   "Chinese",
+                   "Fish & Chips",
+                   "Indian",
+                   "Italian",
+                   "Japanese",
+                   "Kebab",
+                   "Pizza",
+                   "Seafood",
+                   "Vegetarian"];
+    
+    var metrics = ["Cheap",
+                  "Expensive",
+                  "Near",
+                  "Far",
+                  "Highly Rated",
+                  "Vegan",
+                  "Halal",
+                  "Nut-Safe",
+                  "Friendly Staff",
+                  "Service Speed"];
+    
+    cuisines.forEach(function(value){
+        createDTag($("#cuisines"), value);
+    });
+    
+    metrics.forEach(function(value){
+        createDTag($("#metrics"), value);
+    });
+        
+
 });

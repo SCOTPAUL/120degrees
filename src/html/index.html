@@ -1,172 +1,76 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-
-  <style>
-  .dTag
-    {
-      position:  relative;
-      display: inline-block;
-      top: 0px;
-      margin: 0vh 5% 0.75vh 0vw;
-      left: 5%;
-      width: 35%;
-      height: 1.8vh;
-      border: 2px  solid rgba(0,100,0,0.5);
-      border-radius: 4px; padding: 8px;
-    }
-  </style>
-
-  <script>
-    function drag_start(event)
-    {
-    var style = window.getComputedStyle(event.target, null);
-    var str = (parseInt(style.getPropertyValue("left")) - event.clientX) + ',' + (parseInt(style.getPropertyValue("top")) - event.clientY)+ ',' + event.target.id;
-    event.dataTransfer.setData("Text",str);
-    }
-
-    function drop(event)
-    {
-    var offset = event.dataTransfer.getData("Text").split(',');
-    var dm = document.getElementById(offset[2]);
-    dm.style.left = (event.clientX + parseInt(offset[0],10)) + 'px';
-    dm.style.top = (event.clientY + parseInt(offset[1],10)) + 'px';
-
-    event.preventDefault();
-    return false;
-    }
-
-    function drag_over(event)
-    {
-    event.preventDefault();
-    return false;
-    }
-
-    function getOffsetRect(elem) {
-      var p = $(elem);
-      var position = p.position();
-      var $item = $(body);
-      var bodyOffset = $item.offset()
-      var bitToAdd = p.width()/2
-      var width1 = $item.width();
-      var midpoint = (width1 +  bodyOffset.left )/ 2;
-      var difference = (position.left + bitToAdd) - midpoint;
-      var divPos = $("#pinboard").offset();
-      var score = difference / (midpoint - divPos.left);
-      if (score < -1) {
-   score = -1
-      }
-      if (score > 1) {
-  score = 1
-      }
-      $( "#text" ).append( "<br>id = " + elem.id + " || score: " + score);
-    }
-
-    function getWidth(elem) {
-      var $this = $(body);
-      var width = $this.width();
-      $( "#text" ).text( "midpoint = " + width/2 );
-    }
-
-  </script>
-
-    <meta charset="utf-8">
-    <title>120°</title>
-    <link rel="stylesheet" href="../css/main.css" type="text/css">
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css" type="text/css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script> <! ADDED >
-</head>
-<body id="body">
-    <div id="main-container" class="pure-g" style="height:40vh"> <! Search and Suggestion functions >
-      <div class="pure-u-5-24" style="height:30%">
-        <form class="pure-form">
-          <fieldset>
-              <legend>Or Search for something else</legend>
-              <input type="text">
-              <button type="submit" class="pure-button pure-button-primary">Search</button>
-          </fieldset>
-        </form>
-        <h3>TASKS STILL TO DO ON INDEX</h3>
-        <ul>
-          <li>Let Paul see the method behind the madness</li>
-          <li>Search functionality</li>
-          <li>Search creates new draggable result</li>
-          <li>Create metric list and update</li>
-          <li>Survive bitching about colour decisions</li>
-          <li>Boldly stand up for colour decisions</li>
-          <li>Fold on colour decisions</li>
-          <li>Sort draggable object sizes to be fully adaptive</li>
-          <li>Final sort of ratios along top</li>
-          <li>Formalise pinboard placement and annotations</li>
-          <li>Fix inconsistent scores between tag types</li>
-          <li>Finish the AP3 and PL3 assignments</li>
-          <li>Write that report</li>
-          <li>Come up with more tasks</li>
-        </ul>
-      </div>
-      <div class="pure-u-5-24">
-        <center><h1>Cuisine</h1>
-        <ul style="position:relative">
-          <a class="dTag" id="cui1" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">American</a>
-          <a class="dTag" id="cui2" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Burgers</a>
-          <a class="dTag" id="cui3" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Chinese</a>
-          <a class="dTag" id="cui4" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Fish & Chips</a>
-          <a class="dTag" id="cui5" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Indian</a>
-          <a class="dTag" id="cui6" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Italian</a>
-          <a class="dTag" id="cui7" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Japanese</a>
-          <a class="dTag" id="cui8" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Kebab</a>
-          <a class="dTag" id="cui9" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Mexican</a>
-          <a class="dTag" id="cui10" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Mongolian</a>
-          <a class="dTag" id="cui11" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Pizza</a>
-          <a class="dTag" id="cui12" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Sushi</a>
-          <a class="dTag" id="cui13" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Thai</a>
-          <a class="dTag" id="cui14" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Vegetarian</a>
-        </ul></center>
-      </div>
-      <div class="pure-u-5-24">
-        <center><h1>Metric Tags</h1></center>
-        <ul >
-          <a class="dTag" id="metric1" style="border-color:purple; background:green" draggable="true" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Expensive</a>
-          <a class="dTag" id="metric2" style="border-color:purple; background:green" draggable="true" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Cheap</a>
-        </ul>
-      </div>
-      <div id="map-container" class="pure-u-8-24">
-        <div class="pure-u-23-24" style="height:90%">
-          <button type="button" class="pure-button set-location"><span id="location"></span> | <span id="set-location-text">Set Location &#9660;</span></button>
-          <div id="map" style="height:100%"></div>
+  <head>
+      <meta charset="utf-8">
+      <title>120°</title>
+      <link rel="stylesheet" href="../css/main.css" type="text/css">
+      <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css" type="text/css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <script type="text/javascript" src="../js/indexScript.js"></script>
+  </head>
+  <body id="body">
+      <div id="main-container" class="pure-g" style="height:40vh"> <! Search and Suggestion functions >
+        <div class="pure-u-5-24" style="height:30%">
+          <form class="pure-form">
+            <fieldset>
+                <legend>Or Search for something else</legend>
+                <input type="text">
+                <button type="submit" class="pure-button pure-button-primary">Search</button>
+            </fieldset>
+          </form>
+          <h3>TASKS STILL TO DO ON INDEX</h3>
+          <ul>
+            <li>Search functionality</li>
+            <li>Create metric list and update</li>
+            <li>Sort draggable object sizes to be fully responsive</li>
+            <li>Final sort of ratios along top</li>
+            <li>Formalise pinboard placement and annotations</li>
+            <li>Fix inconsistent scores between tag types</li>
+            <li>Sort file references, split single doc</li>
+          </ul>
+        </div>
+        <div class="pure-u-5-24">
+            <center><h1>Cuisine</h1>
+                <ul id="cuisines"></ul>
+            </center>
+        </div>
+        <div class="pure-u-5-24">
+            <center><h1>Metric Tags</h1>
+                <ul id="metrics"></ul>
+            </center>
+        </div>
+        <div id="map-container" class="pure-u-8-24">
+          <div class="pure-u-23-24" style="height:90%">
+            <button type="button" class="pure-button set-location"><span id="location"></span> | <span id="set-location-text">Set Location &#9660;</span></button>
+            <div id="map" style="height:100%"></div>
+          </div>
         </div>
       </div>
+      <div id="pinboard" ondrop="drop(event)" ondragover="drag_over(event)" style="border: 3px dashed rgba(0,0,0,0.5); height: 10vh; width: 60vw; margin: auto">
+        <h2 style="text-align:center">Drag items here</h2>
+        <p style="float:right">High score: 1</p>
+        <p style="float: left">Low score: -1</p>
+      </div>
     </div>
-    <div id="pinboard" ondrop="drop(event)" ondragover="drag_over(event)" style="border: 3px dashed rgba(0,0,0,0.5); height: 10vh; width: 60vw; margin: auto">
-      <h2 style="text-align:center">Drag items here</h2>
-      <p style="float:right">High score: 1</p>
-      <p style="float: left">Low score: -1</p>
+    <div class="pure-g" style="width:100vw; border: 1px solid rgba(0,0,0,1);">
+      <div class="pure-u-18-24" style="height:48vh; top:0px">  <! HEX RESULTS DISPLAY HERE >
+        results
+        <br><br><br><br><br><br>
+        hexagons would be here or some shit
+      </div>
+      <div class="pure-u-5-24" id="text">
+        <h2>LOG<small>for testing</small></h2>
+      </div>
     </div>
-  </div>
-  <div class="pure-g" style="width:100vw; border: 1px solid rgba(0,0,0,1);">
-    <div class="pure-u-18-24" style="height:48vh; top:0px">  <! HEX RESULTS DISPLAY HERE >
-      results
-      <br><br><br><br><br><br>
-      hexagons would be here or some shit
-    </div>
-    <div class="pure-u-5-24" id="text">
-      <h2>LOG<small>for testing</small></h2>
-    </div>
-  </div>
 
 
+      <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
+      <script type="text/javascript" src="../js/restaurants.js"></script>
+      <script type="text/javascript" src="../js/main.js"></script>
+      <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms&callback=initMap">
+      </script>
 
-    <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="../../bower_components/react/react.min.js"></script>
-    <script type="text/javascript" src="../../bower_components/papaparse/papaparse.min.js"></script>
-    <script type="text/javascript" src="../js/restaurants.js"></script>
-    <script type="text/javascript" src="../js/main.js"></script>
-    <script defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms&callback=initMap">
-    </script>
-
-</body>
+  </body>
 
 </html>
