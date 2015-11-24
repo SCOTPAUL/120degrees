@@ -2,6 +2,9 @@ var GOOGLE_MAPS_API_KEY = "AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms";
 var map;
 var pos_marker;
 
+var all_cuisines = ["American", "Breakfast", "Burgers", "Chicken", "Chinese", "Curry", "Desserts", "English", "Fish & Chips", "Greek", "Grill", "Healthy", "Ice Cream", "Indian", "Italian", "Japanese", "Kebab", "Lebanese", "Mediterranean", "Mexican", "Milkshakes", "Mongolian", "Oriental", "Persian", "Pizza", "Sandwhiches", "Scottish", "Spanish", "Sushi", "Tapas", "Thai", "Vegetarian", "Wraps"];
+
+
 var initMap = function() {
     var latlng = {lat: 55.8628, lng: -4.2542}
 
@@ -105,8 +108,7 @@ $(document).ready(function(){
         
     });
     
-    
-    var cuisines = ["American",
+    var display_cuisines = ["American",
                    "Chinese",
                    "Fish & Chips",
                    "Indian",
@@ -128,13 +130,12 @@ $(document).ready(function(){
                   "Friendly Staff",
                   "Service Speed"];
     
-    cuisines.forEach(function(value){
-        createDTag($("#cuisines"), value);
+    display_cuisines.forEach(function(value){
+        createDTag($("#cuisines"), value, "cuisineTag");
     });
     
     metrics.forEach(function(value){
-        createDTag($("#metrics"), value);
+        createDTag($("#metrics"), value, "metricTag");
     });
-        
 
 });

@@ -19,7 +19,7 @@ function drag_over(event){
     return false;
 };
 
-function getOffsetRect(elem){
+function getScore(elem){
     var p = $(elem);
     var position = p.position();
     var $item = $(body);
@@ -31,10 +31,10 @@ function getOffsetRect(elem){
     var divPos = $("#pinboard").offset();
     var score = (difference / (midpoint - divPos.left)) * 1.2;
     if (score < -1) {
-        score = -1
+        score = -1;
     }
     if (score > 1) {
-      score = 1
+      score = 1;
     }
     $( "#text" ).append( "<br>id = " + elem.id + " || score: " + score);
 };
@@ -46,17 +46,26 @@ function getWidth(elem){
 };
 
 var tagId = 0;
-function createDTag(insertionPoint, label){
-    insertionPoint.append($('<li></li>')
+function createDTag(insertionPoint, label, colorClass){
+    var new_tag = $('<li></li>').appendTo(insertionPoint)
                             .attr({draggable : true, id:tagId.toString()})
                             .addClass("dTag")
                             .text(label)
                             .on('dragstart', function(event){drag_start(event.originalEvent);})
-                            .on('dragend', function(event){getOffsetRect(this);})
-                        );
+                            .on('dragend', function(event){getScore(this);});
+    
+    if(colorClass){
+        new_tag.addClass(colorClass);
+    }
+    
     ++tagId;
 };
 
 function search(query){
-    createDTag($("#metrics"), query);
+    if($.inArray(query, all_cuisines) != -1){
+        createDTag($("#metrics"), query, "cuisineTag");
+    }
+    else {
+        createDTag($("#metrics"), query, "suggestionTag");
+    }
 }
