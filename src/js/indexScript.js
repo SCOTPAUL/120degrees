@@ -56,3 +56,7 @@ function createDTag(insertionPoint, label){
                         );
     ++tagId;
 };
+
+function search(query){
+    createDTag($("#metrics"), query);
+}

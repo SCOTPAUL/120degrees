@@ -96,6 +96,15 @@ $(document).ready(function(){
         toggle_map();
     });
     
+    $("#search-form").submit(function(event){
+        event.preventDefault();
+        
+        var query = $("#search-input").val();
+        search(query);
+        $(this).trigger("reset");
+        
+    });
+    
     
     var cuisines = ["American",
                    "Chinese",
