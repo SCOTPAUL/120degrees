@@ -49,6 +49,8 @@ function mclick(d) {
 	    e1.transition()
 		.attr("transform", "scale(1.75)")
 		.attr("d", function (d) { return "M" + (d.x)/1.75 + "," + (d.y)/1.75 + hexbin.hexagon();});
+		e1.moveToFront();
+		
 	
 	svg.selectAll("g")
 		.append("rect")
@@ -57,7 +59,8 @@ function mclick(d) {
 		.attr("x", (d.x - 20))
 		.attr("y", (d.y + 20))
 		.attr("fill", "gainsboro")
-		.on("click", buttonclick);
+		.on("click", buttonclick)
+		.moveToFront();
 
 		//adds text to buttons
 		buttonText = svg.selectAll("g")
@@ -66,7 +69,8 @@ function mclick(d) {
 		.attr("x", (d.x - 15))
 		.attr("y", (d.y + 40))
 		.attr("font-family", "sans-serif")
-		.attr("font-size", "11px");
+		.attr("font-size", "11px")
+		.moveToFront();
 
 	}
 	else {
@@ -78,7 +82,6 @@ function mclick(d) {
 	    svg.selectAll("rect").remove();
 		buttonText.remove();
 	}
-	e1.moveToFront();
 }
 
 function buttonclick(d){
