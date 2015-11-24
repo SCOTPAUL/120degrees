@@ -13,16 +13,7 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <style>
-    a
-    {
-      position:  absolute;
-      left: 0;
-      top: 0; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
-      width: 200px;
-      background: rgba(255,255,255,0.66);
-      border: 2px  solid rgba(0,0,0,0.5);
-      border-radius: 4px; padding: 8px;
-    }
+
     </style>
     <script>
 
@@ -86,8 +77,7 @@
   </ul>
       <div id="pinboard" ondrop="drop(event)" ondragover="drag_over(event)" style="border: 3px solid rgba(0,0,0,0.5); height: 10vh; width: 60vw; margin: auto">
         <h2 style="text-align:center">Drag items here</h2>
-        <p style="float:right">High score: 1</p>
-        <p style="float: left">Low score: -1</p>
+
       </div>
       <div id="display" style="border: 3px solid rgba(0,0,0,0.5); height: 400px; width: 100%">
 	<p id="text"> LOG: </p>
