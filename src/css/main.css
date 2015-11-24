@@ -17,6 +17,16 @@ html, body {
     border-radius: 4px; padding: 8px;
   }
 
+#cuisines > .dTag {
+    border-color:yellow; 
+    background:cyan;
+}
+
+#metrics > .dTag {
+    border-color:purple;
+    background:green;
+}
+
 #main-container {
     height: 100%;
 }

@@ -6,7 +6,6 @@
       <link rel="stylesheet" href="../css/main.css" type="text/css">
       <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css" type="text/css">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
       <script type="text/javascript" src="../js/indexScript.js"></script>
   </head>
   <body id="body">
@@ -31,30 +30,14 @@
           </ul>
         </div>
         <div class="pure-u-5-24">
-          <center><h1>Cuisine</h1>
-          <ul style="position:relative">
-            <a class="dTag" id="cui1" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">American</a>
-            <a class="dTag" id="cui2" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Burgers</a>
-            <a class="dTag" id="cui3" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Chinese</a>
-            <a class="dTag" id="cui4" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Fish & Chips</a>
-            <a class="dTag" id="cui5" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Indian</a>
-            <a class="dTag" id="cui6" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Italian</a>
-            <a class="dTag" id="cui7" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Japanese</a>
-            <a class="dTag" id="cui8" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Kebab</a>
-            <a class="dTag" id="cui9" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Mexican</a>
-            <a class="dTag" id="cui10" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Mongolian</a>
-            <a class="dTag" id="cui11" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Pizza</a>
-            <a class="dTag" id="cui12" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Sushi</a>
-            <a class="dTag" id="cui13" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Thai</a>
-            <a class="dTag" id="cui14" draggable="true" style="border-color:yellow; background:cyan" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Vegetarian</a>
-          </ul></center>
+            <center><h1>Cuisine</h1>
+                <ul id="cuisines"></ul>
+            </center>
         </div>
         <div class="pure-u-5-24">
-          <center><h1>Metric Tags</h1></center>
-          <ul >
-            <a class="dTag" id="metric1" style="border-color:purple; background:green" draggable="true" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Expensive</a>
-            <a class="dTag" id="metric2" style="border-color:purple; background:green" draggable="true" ondragstart="drag_start(event)" ondragend="getOffsetRect(this)">Cheap</a>
-          </ul>
+            <center><h1>Metric Tags</h1>
+                <ul id="metrics"></ul>
+            </center>
         </div>
         <div id="map-container" class="pure-u-8-24">
           <div class="pure-u-23-24" style="height:90%">
