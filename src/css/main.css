@@ -17,14 +17,19 @@ html, body {
     overflow: hidden;
 }
 
-#cuisines > .dTag {
+.dTag.cuisineTag {
     border-color:yellow; 
-    background:cyan;
+    background-color:cyan;
 }
 
-#metrics > .dTag {
+.dTag.metricTag {
     border-color:purple;
-    background:green;
+    background-color:green;
+}
+
+.dTag.suggestionTag {
+    border-color: aquamarine;
+    background-color: red;
 }
 
 #main-container {
