@@ -2,8 +2,8 @@
 	//global variables, because who needs good coding practice
 	var coordinates = {lat: 55.8735672, lng: -4.2925851}; //will need to get this from the marker
 	var radius = 5000; //global radius - default to 1km
-	var tags = ["hot","danger","swanky","seafood"]; //this is where the tags go
-	var tagValues = [1,1,-.5,.5] //this is where each tag is given a weight from -1 to 1, should be same length as tags
+	var tags = ["Indian","Near"]; //this is where the tags go
+	var tagValues = [1,-1] //this is where each tag is given a weight from -1 to 1, should be same length as tags
 	var otherTags = []; //should remain [], will be used later
 	var otherTagValues = [];
 	var metrics = ["Cheap","Expensive","Near","Far","Highly-Rated"]; //need to list all possible cuizine types here
@@ -21,6 +21,24 @@ function contains(array, obj) {
         }
     }
     return false;
+}
+
+// from http://www.movable-type.co.uk/scripts/latlong.html
+function getDistance(a,b){
+	var lat1 = a.lat*Math.PI/180;
+	var lat2 = b.lat*Math.PI/180;
+	var dlat = (lat2 - lat1)*Math.PI/180;
+	var dlon = (b.lng - a.lng)*Math.PI/180;
+	
+	var R = 6371000; // metres
+	var a = Math.sin(dlat/2) * Math.sin(dlat/2) +
+			Math.cos(lat1) * Math.cos(lat2) *
+			Math.sin(dlon/2) * Math.sin(dlon/2);
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+	var d = R * c;
+	return d;
+	
 }
 	
 function initMap() {
@@ -78,6 +96,8 @@ function detailedCallback(result,status){
 			result.associativeScore = 0;
 			for (var j = 0; j < otherTags.length; j++){
 				var tagScore = 0; //each tag will add a value to the associativeScore from -1 to 1, which will then be multiplied by the tag
+				var coordinates2 = {lat: result.geometry.location.lat(), lng: result.geometry.location.lng()};
+				result.distance = getDistance(coordinates2,coordinates);
 				//start by checking designated metrics tags
 				if (contains(metrics,otherTags[j])){
 					if (otherTags[j] == "Cheap") {
@@ -86,11 +106,15 @@ function detailedCallback(result,status){
 						if (result.price_level != undefined) { tagScore = (result.price_level/4)*otherTagValues[j]; }
 					} else if (otherTags[j] == "Near") {
 						if (result.geometry.location != undefined) {
-							tagscore = (((getDistance(result.geometry.location,coordinates)-(radius/2))*-1)/(radius/2))*otherTagValues[j];
+							
+							
+							tagscore = (((result.distance-(radius/2))*-1)/(radius/2))*otherTagValues[j];
+							
 						}
 					} else if (otherTags[j] == "Far") {
 						if (result.geometry.location != undefined) {
-							tagscore = (((getDistance(result.geometry.location,coordinates)-(radius/2)))/(radius/2))*otherTagValues[j];
+							
+							tagscore = (((result.distance-(radius/2)))/(radius/2))*otherTagValues[j];
 						}
 					} else if (otherTags[j] == "Highly-Rated") {
 						if (result.rating != undefined) { tagScore = (result.rating/5)*otherTagValues[j]; }
@@ -112,8 +136,6 @@ function detailedCallback(result,status){
 				result.associativeScore += tagScore;
 			}
 			if (result.added == undefined){
-				console.log("adding: "+result.name);
-				console.log(Object.keys(result));
 				sortedResults.push(result);
 				result.added = true;
 			}
@@ -128,17 +150,14 @@ function detailedCallback(result,status){
 
 //@param sortedResults: array of google search results sorted by associative score, each with additional attribute .associativeScore used for colors
 function displayResults(sortedResults){
-	console.log("preparing to display:");
-    for (var i = 0; i < sortedResults.length; i++) {
-		console.log(sortedResults[i].name);
-	}
     for (var i = 0; i < sortedResults.length; i++) {
 		if (sortedResults[i].printed == undefined) {
 			var price = "";
 			var rating = "";
 			if (sortedResults[i].rating != undefined) {rating = sortedResults[i].rating+"*";}
 			if (sortedResults[i].price_level != undefined) {price = sortedResults[i].price_level+"£";}
-			document.getElementById('list').innerHTML += '<div class="box">' + sortedResults[i].name + "<br>" + rating + "<br>" + price + "</div>";
+			
+			document.getElementById('list').innerHTML += '<div class="box">' + sortedResults[i].name + "<br>" + rating + "<br>" + price + "<br>" + Math.round(sortedResults[i].distance) + " m</div>";
 			//replace above line with display hexagon
 			sortedResults[i].printed = true;
 		}
