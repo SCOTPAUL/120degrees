@@ -9,25 +9,27 @@
       <script type="text/javascript" src="../js/indexScript.js"></script>
   </head>
   <body id="body">
-      <div id="main-container" class="pure-g" style="height:40vh"> <! Search and Suggestion functions >
-        <div class="pure-u-5-24" style="height:30%">
-          <form id="search-form" class="pure-form">
-            <fieldset>
-                <legend>Or Search for something else</legend>
-                <input id="search-input" type="text">
-                <button type="submit" class="pure-button pure-button-primary">Search</button>
-            </fieldset>
-          </form>
-          <h3>TASKS STILL TO DO ON INDEX</h3>
-          <ul>
-            <li>Search functionality</li>
-            <li>Create metric list and update</li>
-            <li>Sort draggable object sizes to be fully responsive</li>
-            <li>Final sort of ratios along top</li>
-            <li>Formalise pinboard placement and annotations</li>
-            <li>Fix inconsistent scores between tag types</li>
-            <li>Sort file references, split single doc</li>
-          </ul>
+      <div id="top-section" class="pure-g" style="height:40vh"> <! Search and Suggestion functions >
+        <div id="top-left" class="pure-u-5-24" style="height:45vh">
+          <div id="title" class="pure-u-1-1" style="height:10vh">
+            title
+          </div>
+          <div id="search-container" class="pure-u-1-1" style="height:35vh">
+            <div id="search-field" class="pure-u-1-1">
+              <form id="search-form" class="pure-form">
+                <fieldset>
+                    <legend>Or Search for something else</legend>
+                    <input id="search-input" type="text">
+                    <button type="submit" class="pure-button pure-button-primary">Search</button>
+                </fieldset>
+              </form>
+            </div>
+            <div>
+              <center>
+                <ul id="search-results"></ul>
+              </center>
+            </div>
+          </div>
         </div>
         <div class="pure-u-5-24">
             <center><h1>Cuisine</h1>
