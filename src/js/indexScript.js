@@ -63,9 +63,9 @@ function createDTag(insertionPoint, label, colorClass){
 
 function search(query){
     if($.inArray(query, all_cuisines) != -1){
-        createDTag($("#metrics"), query, "cuisineTag");
+        createDTag($("#search-results"), query, "cuisineTag");
     }
     else {
-        createDTag($("#metrics"), query, "suggestionTag");
+        createDTag($("#search-results"), query, "suggestionTag");
     }
 }
