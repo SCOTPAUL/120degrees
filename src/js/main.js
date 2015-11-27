@@ -53,13 +53,13 @@ var toggle_map = function(){
         map_div.css("visibility","visible")
             .hide()
             .slideDown("slow");
-        $("#set-location-text").html("Set Location &#9650;");
+        $("#set-location-text > span").removeClass("fa-caret-down").addClass("fa-caret-up");
     }
     else {
         map_div.slideUp("slow", function(){
             $(this).css("visibility", "hidden");
         });
-        $("#set-location-text").html("Set Location &#9660;");
+        $("#set-location-text > span").removeClass("fa-caret-up").addClass("fa-caret-down");
     }
 };
 
