@@ -149,3 +149,9 @@ html, body {
     width: 100%;
     visibility: hidden;
 }
+
+.hexagon {
+  fill: none;
+  stroke: #000;
+  stroke-width: .5px;
+}

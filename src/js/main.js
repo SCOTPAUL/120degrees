@@ -320,6 +320,7 @@ function algorithm(hashmap){
 	}
 
 	//@param sortedResults: array of google search results sorted by associative score, each with additional attribute .associativeScore used for colors
+	var data = [];
 	function displayResults(sortedResults){
 		for (var i = 0; i < sortedResults.length; i++) {
 			if (sortedResults[i].printed == undefined) {
@@ -327,11 +328,16 @@ function algorithm(hashmap){
 				var rating = "";
 				if (sortedResults[i].rating != undefined) {rating = sortedResults[i].rating+"*";}
 				if (sortedResults[i].price_level != undefined) {price = sortedResults[i].price_level+"£";}
-				document.getElementById('text').innerHTML += '<div class="box">' + sortedResults[i].name + "<br>" + rating + "<br>" + sortedResults[i].associativeScore + "</div>";
+				//console.log(sortedResults[i].associativeScore);
+				data.push([[sortedResults[i].name, rating, price, sortedResults[i].associativeScore]]);
+				console.log([sortedResults[i].name+" "+rating+" "+price+" "+sortedResults[i].associativeScore]);
+				console.log(" ");
+				//document.getElementById('text').innerHTML += '<div class="box">' + sortedResults[i].name + "<br>" + rating + "<br>" + sortedResults[i].associativeScore + "</div>";
 				//replace above line with display hexagon
 				sortedResults[i].printed = true;
 			}
 		}
+		drawHexagons(data);
 	}
 
 	//function for the preliminary google search - assigning associative scores comes later
@@ -355,7 +361,243 @@ function algorithm(hashmap){
 	  }, callback);
 	}
 	
+function drawHexagons(data){
+	d3.selection.prototype.moveToFront = function(){
+    return this.each(function(){
+	this.parentNode.appendChild(this);
+    });
+};
+
+function mover(d) {
+  var el = d3.select(this)
+		.transition()
+		.duration(10)		  
+		.style("fill-opacity", 0.1)
+		.style("width", width + 10)
+		;
+}
+
+function mout(d){
+	var el = d3.select(this)
+	   .transition()
+	   .duration(1000)
+	   .style("fill-opacity", 1)
+	   ;
+}
+
+//enlarge hexagon when it is clicked
+var click = 0;
+var buttonText;
+function mclick(d) {
+	var e1 = d3.select(this)
+	if (click == 0) {
+		click = 1;
+	    e1.transition()
+		.attr("transform", "scale(1.75)")
+		.attr("d", function (d) { return "M" + (d.x)/1.75 + "," + (d.y)/1.75 + hexbin.hexagon();});
+		e1.moveToFront();
+		
 	
+	svg.selectAll("g")
+		.append("rect")
+		.attr("width", 50)
+		.attr("height", 30)
+		.attr("x", (d.x - 40))
+		.attr("y", (d.y + 20))
+		.attr("fill", "gainsboro")
+		.on("click", buttonclick)
+		.moveToFront();
+
+		//adds text to buttons
+		button1Text = svg.selectAll("g")
+		.append("text")
+		.text("Order")
+		.attr("x", (d.x - 25))
+		.attr("y", (d.y + 40))
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.moveToFront();
+
+	svg.selectAll("g")
+		.append("rect")
+		.attr("width", 50)
+		.attr("height", 30)
+		.attr("x", (d.x + 30))
+		.attr("y", (d.y + 20))
+		.attr("fill", "gainsboro")
+		.on("click", buttonclick)
+		.moveToFront();
+
+		//adds text to buttons
+		button2Text = svg.selectAll("g")
+		.append("text")
+		.text("Map")
+		.attr("x", (d.x + 40))
+		.attr("y", (d.y + 40))
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.moveToFront();
+
+
+	}
+	else {
+		click = 0;
+	    e1.transition()
+		.attr("transform", "scale(1)")
+		.attr("d", function (d) { return "M" + (d.x) + "," + (d.y) + hexbin.hexagon();});
+
+	    svg.selectAll("rect").remove();
+		button1Text.remove();
+		button2Text.remove();
+	}
+}
+
+function buttonclick(d){
+	alert("button clicked");
+}
+	
+var margin = {top: 40, right: 40, bottom: 40, left: 40},
+    width = 1200 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom,
+    rad = 75;
+	
+//Calculate the center positions of each hexagon 
+var points = [];
+var a = [];
+var rows = data.length/8;
+var remainder = data.length % 8;
+if(remainder != 0){
+	rows++;
+}
+var count = 0;
+for (var i = 0; i < rows && count < data.length; i++) {
+    for(var j = 0; j < 8 && count < data.length; j++){
+    	points.push([rad * j * 1.75 + rad, (height * 0.5) + i*120]);
+	if(i % 2 == 0){
+		a.push([[rad * j * 1.75 + rad, (height * 0.5) + i*150],data[count][0]]);
+	}
+	else{
+		a.push([[rad * j * 1.75, (height * 0.5) + i*115],data[count][0]]);
+	}
+	count++;
+    }
+}
+
+//make each hexagon a different shade
+var color = d3.scale.linear()
+    .domain([-1, 1])
+    .range(["white", "steelblue"])
+    .interpolate(d3.interpolateLab);
+
+var hexbin = d3.hexbin()
+	.size([width, height])
+    .radius(rad);
+
+var x = d3.scale.identity()
+    .domain([0, width]);
+
+var y = d3.scale.linear()
+    .domain([0, height])
+    .range([height, 0]);
+
+var svg = d3.select("#results_display").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+
+//Draw the hexagons
+svg.append("g")
+    .selectAll(".hexagon")
+    .data(hexbin(points))
+    .enter().append("path")
+    .attr("class", "hexagon")
+    .attr("id", function(d, i) { return "h" + i;})
+    .style("fill", function(d, i) { return color(data[i][3]);})
+    .attr("d", function (d) { return "M" + d.x + "," + d.y + hexbin.hexagon();})
+    .on("mouseover", mover)
+    .on("mouseout",mout)
+    .on("click", mclick);
+
+var xarray = [];
+var yarray = [];
+for(var k = 0; k < data.length; k++){
+	var d = d3.select("#h" + k).attr("d");
+	var newX;
+	var newY;
+	var startx = 1;
+	var endx;
+	var starty;
+	var endy;
+	for(var m = 0; m < d.length; m++){
+		if (d.charAt(m) == ",") {
+			endx = m;
+			starty = m+1;
+		}
+		else if (d.charAt(m) == "m"){
+			endy = m;
+			break;
+		}
+ 	}
+	newX = d.substring(startx,endx);
+	xarray.push(newX);
+	newY = d.substring(starty,endy);
+	yarray.push(newY);
+}
+
+//adds text to hexagon
+svg.selectAll("g")
+		mainText = svg.selectAll("g")
+		.data(data)
+		.enter()
+		.append("text")
+		.text(function(d, i) {
+			console.log(data[i-1][0]);
+			return data[i-1][0];
+		})
+		.attr("x", function(d, i) {
+			return xarray[i-1];
+		})
+		.attr("y", function(d, i) {
+			return yarray[i-1]-20;
+		})
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.attr("text-anchor", "middle");
+		
+		mainText = svg.selectAll("g")
+		.data(data)
+		.enter()
+		.append("text")
+		.text(function(d, i) {
+			return data[i-1][1] ;
+		})
+		.attr("x", function(d, i) {
+			return xarray[i-1];
+		})
+		.attr("y", function(d, i) {
+			return yarray[i-1]-10;
+		})
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.attr("text-anchor", "middle");
+		
+		mainText = svg.selectAll("g")
+		.data(data)
+		.enter()
+		.append("text")
+		.text(function(d, i) {
+			return data[i-1][2] ;
+		})
+		.attr("x", function(d, i) {
+			return xarray[i-1];
+		})
+		.attr("y", function(d, i) {
+			return yarray[i-1];
+		})
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.attr("text-anchor", "middle");
+
+};
 }
 
 
