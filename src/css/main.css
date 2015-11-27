@@ -20,6 +20,17 @@ html, body {
     overflow: hidden;
 }
 
+#map-buttons {
+    position: relative;
+    height: 8vh
+}
+
+#map-buttons > div {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
 #title-image {
     position: absolute;
     top:1vh;
@@ -32,6 +43,7 @@ html, body {
   height:35vh;
   width:100%;
 }
+
 
 #bottom-section {
   background-color: white;
