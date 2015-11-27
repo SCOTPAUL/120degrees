@@ -47,17 +47,21 @@ function getWidth(elem){
 
 var tagId = 0;
 function createDTag(insertionPoint, label, colorClass){
-    var new_tag = $('<li></li>').appendTo(insertionPoint)
+    if(!label){
+        return;
+    }
+
+    var new_tag = $('<div></div>').appendTo(insertionPoint)
                             .attr({draggable : true, id:tagId.toString()})
                             .addClass("dTag")
                             .text(label)
                             .on('dragstart', function(event){drag_start(event.originalEvent);})
                             .on('dragend', function(event){getScore(this);});
-    
+
     if(colorClass){
         new_tag.addClass(colorClass);
     }
-    
+
     ++tagId;
 };
 
