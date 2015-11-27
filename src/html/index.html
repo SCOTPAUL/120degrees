@@ -29,9 +29,11 @@
           <h1>Metrics</h1>
         </div>
       </div>
-      <div class="pure-u-9-24">
-        <button id="set-new-location" type="button" class="pure-button pure-button-primary new-location">Get Location <span class="fa fa-location-arrow"></span></button>
-        <button type="button" class="pure-button pure-button-primary set-location"><span id="location"></span> | <span id="set-location-text">Set Location <span class="fa fa-caret-down"></span></span></button>
+      <div id="map-buttons" class="pure-u-9-24">
+          <div>
+              <button id="set-new-location" type="button" class="pure-button pure-button-primary new-location">Get Location <span class="fa fa-location-arrow"></span></button>
+              <button type="button" class="pure-button pure-button-primary set-location"><span id="location"></span> | <span id="set-location-text">Set Location <span class="fa fa-caret-down"></span></span></button>
+          </div>
       </div>
     </div>
 
@@ -75,7 +77,9 @@
         <h2 style="text-align:center">Drag items here</h2>
       </div>
       <div id="mid-right" class="pure-u-4-24">
-          <button id="generate-results" class="pure-button pure-button-primary">Generate Results</button>
+          <div>
+              <button id="generate-results" class="pure-button pure-button-primary">Generate Results</button>
+          </div>
       </div>
     </div>
 
