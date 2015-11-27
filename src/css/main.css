@@ -14,7 +14,7 @@ html, body {
 
 #title-bar {
     background-color: rgb(47, 54, 74);
-    height:10vh;
+    height:8vh;
     width: 100%;
     color: white;
     overflow: hidden;
@@ -22,7 +22,7 @@ html, body {
 
 #title-image {
     position: absolute;
-    top:2vh;
+    top:1vh;
     left: 2vw;
     vertical-align: middle;
   }
