@@ -54,7 +54,7 @@ html, body {
 }
 
 #cuisine-title {
-    height:8vh;
+    height:10vh;
     top:0px;
     text-align: center;
 }
@@ -66,7 +66,7 @@ html, body {
 }
 
 #metric-title {
-    height:8vh;
+    height:10vh;
     text-align: center;
 }
 
@@ -122,6 +122,10 @@ html, body {
 
 #map-container {
     height: 100%;
+}
+
+#map-container > div {
+    height: 90%;
 }
 
 .set-location {
