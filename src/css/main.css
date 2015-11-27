@@ -5,11 +5,39 @@ html, body {
 }
 
 #top-section {
-    height: 45vh;
+    height: 40vh;
 }
 
 #top-left {
     height: 10vh;
+}
+
+#title-bar {
+    background-color: rgb(47, 54, 74);
+    height:10vh;
+    width:100%;
+    color: white;
+}
+
+#top-section {
+  background-color: rgb(147, 200, 200);
+  height:35vh;
+  width:100%;
+}
+
+#bottom-section {
+  background-color: white;
+  height:45vh;
+  width:100%;
+  bottom: 0px;
+}
+
+#middle-section {
+  background-color: rgb(233,237,241);
+  height:10%;
+  border-top: 2px solid rgb(47,53,74);
+  border-bottom: 2px solid rgb(47,53,74);
+  width:100%;
 }
 
 #search-container {
