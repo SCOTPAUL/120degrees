@@ -61,7 +61,16 @@ html, body {
 }
 
 #mid-right {
+    position: relative;
     line-height: 25px;
+    height: 100%;
+    text-align: center;
+}
+
+#mid-right > div {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #search-container {
