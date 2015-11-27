@@ -18,6 +18,13 @@
 	var done;
 	var cuizineTypes = ["American", "Breakfast", "Burgers", "Chicken", "Chinese", "Curry", "Desserts", "English", "Fish & Chips", "Greek", "Grill", "Healthy", "Ice Cream", "Indian", "Italian", "Japanese", "Kebab", "Lebanese", "Mediterranean", "Mexican", "Milkshakes", "Mongolian", "Oriental", "Persian", "Pizza", "Sandwhiches", "Scottish", "Spanish", "Sushi", "Tapas", "Thai", "Vegetarian", "Wraps"];
 	
+function getTagsFromMap(map){
+	tags = Object.keys(map);
+	for (int i = 0; i < tags.length; i++){
+		tagValues.push(map[tags[i]]);
+	}
+}
+	
 //code taken from user brad on http://stackoverflow.com/questions/237104/array-containsobj-in-javascript
 function contains(array, obj) {
     for (var i = 0; i < array.length; i++) {
