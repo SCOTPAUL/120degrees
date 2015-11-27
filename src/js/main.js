@@ -25,24 +25,28 @@ var initMap = function() {
         reverseGeocodeMarker(geocoder, map, $("#location"));
     };
 
+    var geolocate = function(){
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function(position){
+                latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
+                pos_marker.setPosition(latlng);
+                map.setCenter(latlng);
+                set_location_text();
+            });
+        }
+    }
+
     google.maps.event.addListener(pos_marker, 'dragend', function(){
         set_location_text();
     });
 
-    var geolocation_permission = false;
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(function(position){
-            latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
-            pos_marker.setPosition(latlng);
-            map.setCenter(latlng);
-            set_location_text();
-            geolocation_permission = true;
-        });
-    }
+    $("#set-new-location").click(function(){
+        geolocate();
+    });
 
-    if(!geolocation_permission){
-        set_location_text();
-    }
+
+    set_location_text();
+
 }
 
 var toggle_map = function(){
