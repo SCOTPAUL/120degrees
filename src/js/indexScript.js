@@ -19,6 +19,8 @@ function drag_over(event){
     return false;
 };
 
+var tag_map = new Map();
+
 function getScore(elem){
     var p = $(elem);
     var position = p.position();
@@ -36,6 +38,9 @@ function getScore(elem){
     if (score > 1) {
       score = 1;
     }
+
+    var tag_text = p.text();
+    tag_map.set(tag_text, score);
     $( "#text" ).append( "<br>id = " + elem.id + " || score: " + score);
 };
 

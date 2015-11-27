@@ -12,7 +12,7 @@
   <body id="body">
 
     <div id="title-bar" class="pure-g">
-      <div class="pure-u-6-24">
+      <div class="pure-u-5-24">
         <div id="title" class="pure-u-1-1">
           <img src="../logo.png"></img>
         </div>
@@ -27,7 +27,7 @@
           <h1>Metric Tags</h1>
         </div>
       </div>
-      <div class="pure-u-8-24">
+      <div class="pure-u-9-24">
         <button id="set-new-location" type="button" class="pure-button pure-button-primary new-location">Get Location <span class="fa fa-location-arrow"></span></button>
         <button type="button" class="pure-button pure-button-primary set-location"><span id="location"></span> | <span id="set-location-text">Set Location <span class="fa fa-caret-down"></span></span></button>
       </div>
@@ -44,20 +44,16 @@
               </fieldset>
             </form>
           </div>
-          <ul id="search-results"></ul>
+          <div id="search-results"></div>
         </div>
         <div class="pure-u-5-24">
           <div id="cuisine-suggestions">
-            <center>
-              <ul id="cuisines"></ul>
-            </center>
+              <div id="cuisines"></div>
           </div>
         </div>
         <div class="pure-u-5-24">
           <div id="metric-suggestions">
-            <center>
-              <ul id="metrics"></ul>
-            </center>
+              <div id="metrics"></div>
           </div>
         </div>
         <div id="map-container" class="pure-u-9-24">                              <!-- Map container overlaying functionality explanation -->
@@ -77,9 +73,7 @@
         <h2 style="text-align:center">Drag items here</h2>
       </div>
       <div id="mid-right" class="pure-u-4-24">
-        <center>
-          <p>Positive scores</p>
-        </center>
+          <button id="generate-results" class="pure-button pure-button-primary">Generate Results</button>
       </div>
     </div>
 

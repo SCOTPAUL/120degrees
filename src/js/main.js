@@ -106,13 +106,18 @@ $(document).ready(function(){
         toggle_map();
     });
 
+    $("#generate-results").click(function(){
+        for(var [key,value] of tag_map.entries()){
+            $( "#text" ).append("<br>" + key + ": " + value);
+        }
+    });
+
     $("#search-form").submit(function(event){
         event.preventDefault();
 
         var query = $("#search-input").val();
         search(query);
         $(this).trigger("reset");
-
     });
 
     var display_cuisines = ["American",
