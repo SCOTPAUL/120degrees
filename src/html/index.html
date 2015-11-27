@@ -9,13 +9,13 @@
       <script type="text/javascript" src="../js/indexScript.js"></script>
   </head>
   <body id="body">
-    <div id="top-section" class="pure-g" style="height:45vh">
+    <div id="top-section" class="pure-g">
 
-      <div id="top-left" class="pure-u-6-24" style="height:45vh">                <!-- Title, search and search results -->
-        <div id="title" class="pure-u-1-1" style="height:10vh">
+      <div id="top-left" class="pure-u-6-24">                <!-- Title, search and search results -->
+        <div id="title" class="pure-u-1-1">
           <h1>120Degrees</h1>
         </div>
-        <div id="search-container" class="pure-u-1-1" style="height:35vh">
+        <div id="search-container" class="pure-u-1-1">
           <div id="search-field" class="pure-u-1-1">
             <form id="search-form" class="pure-form">
               <fieldset>
@@ -26,18 +26,18 @@
             </form>
           </div>
           <div>
-              <ul id="search-results" style="align: center"></ul>
+              <ul id="search-results"></ul>
           </div>
         </div>
       </div>
 
       <div id="top-center-left" class="pure-u-5-24">                            <!-- Cuisine suggestions -->
-        <div id="cuisine-title" style="height:8vh; top:0px">
+        <div id="cuisine-title">
           <center>
             <h1>Cuisine</h1>
           </center>
         </div>
-        <div id="cuisine-suggestions" style="height:37vh">
+        <div id="cuisine-suggestions">
           <center>
             <ul id="cuisines"></ul>
           </center>
@@ -45,12 +45,12 @@
       </div>
 
       <div id="top-center-right" class="pure-u-5-24">                           <!-- Metric suggestions -->
-        <div id="metric-title" style="height:8vh">
+        <div id="metric-title">
           <center>
             <h1>Metric Tags</h1>
           </center>
         </div>
-        <div id="metric-suggestions" style="height:37vh">
+        <div id="metric-suggestions">
           <center>
             <ul id="metrics"></ul>
           </center>
@@ -60,7 +60,7 @@
       <div id="map-container" class="pure-u-8-24">                              <!-- Map container overlaying functionality explanation -->
         <div class="pure-u-23-24" style="height:90%">
           <button type="button" class="pure-button set-location"><span id="location"></span> | <span id="set-location-text">Set Location &#9660;</span></button>
-          <div id="map" style="height:100%"></div>
+          <div id="map"></div>
         </div>
       </div>
     </div>
@@ -71,7 +71,7 @@
           <p>Negative score</p>
         </center>
       </div>
-      <div id="pinboard" class="pure-u-14-24" ondrop="drop(event)" ondragover="drag_over(event)" style="border: 1px dashed rgba(0,0,1,1)">
+      <div id="pinboard" class="pure-u-14-24">
         <h2 style="text-align:center">Drag items here</h2>
       </div>
       <div id="mid-right" class="pure-u-4-24">
@@ -81,7 +81,7 @@
       </div>
     </div>
 
-    <div id="bottom-section" class="pure-g" style="width:100vw; height:45vh; border: 1px solid rgba(0,0,0,1);">
+    <div id="bottom-section" class="pure-g">
 
       <!-- THIS SECTION WILL NEED UPDATING WHEN HEXAGONAL RESULTS ARE READY TO BE DISPLAYED -->
       <div class="pure-u-18-24" style="height:48vh; top:0px">  <!-- HEX RESULTS DISPLAY HERE -->

@@ -95,19 +95,22 @@ $(document).ready(function(){
     // Example usage
     var i;
 
+    $("#pinboard").on("drop", function(event){drop(event.originalEvent)})
+                  .on("dragover", function(event){drag_over(event.originalEvent)});
+
     $(".set-location").click(function(){
         toggle_map();
     });
-    
+
     $("#search-form").submit(function(event){
         event.preventDefault();
-        
+
         var query = $("#search-input").val();
         search(query);
         $(this).trigger("reset");
-        
+
     });
-    
+
     var display_cuisines = ["American",
                    "Chinese",
                    "Fish & Chips",
@@ -118,7 +121,7 @@ $(document).ready(function(){
                    "Pizza",
                    "Seafood",
                    "Vegetarian"];
-    
+
     var metrics = ["Cheap",
                   "Expensive",
                   "Near",
@@ -129,11 +132,11 @@ $(document).ready(function(){
                   "Nut-Safe",
                   "Friendly Staff",
                   "Service Speed"];
-    
+
     display_cuisines.forEach(function(value){
         createDTag($("#cuisines"), value, "cuisineTag");
     });
-    
+
     metrics.forEach(function(value){
         createDTag($("#metrics"), value, "metricTag");
     });
