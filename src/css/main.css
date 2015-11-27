@@ -4,9 +4,53 @@ html, body {
     padding: 0;
 }
 
+#top-section {
+    height: 45vh;
+}
+
+#top-left {
+    height: 10vh;
+}
+
+#search-container {
+    height: 35vh;
+}
+
+#search-results {
+    align-items: center;
+}
+
+#cuisine-title {
+    height:8vh;
+    top:0px;
+}
+
+#cuisine-suggestions {
+    height:37vh;
+}
+
+#metric-title {
+    height:8vh;
+}
+
+#metric-suggestions {
+    height:37vh;
+}
+
+#pinboard {
+    border: 1px dashed rgba(0,0,1,1);
+}
+
+#bottom-section {
+    width:100vw;
+    height:45vh;
+    border: 1px solid rgba(0,0,0,1);
+}
+
 .dTag {
     position:  relative;
     display: inline-block;
+    text-align: center;
     top: 0px;
     margin: 0.5vh 0.5vw 0.5vh 0.5vw;
     left: 0vw;
@@ -46,7 +90,7 @@ html, body {
 
 
 #map {
-    height: 50%;
+    height: 100%;
     width: 100%;
     visibility: hidden;
 }

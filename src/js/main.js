@@ -53,13 +53,13 @@ var toggle_map = function(){
         map_div.css("visibility","visible")
             .hide()
             .slideDown("slow");
-        $("#set-location-text").html("Set Location &#9650;");
+        $("#set-location-text > span").removeClass("fa-caret-down").addClass("fa-caret-up");
     }
     else {
         map_div.slideUp("slow", function(){
             $(this).css("visibility", "hidden");
         });
-        $("#set-location-text").html("Set Location &#9660;");
+        $("#set-location-text > span").removeClass("fa-caret-up").addClass("fa-caret-down");
     }
 };
 
@@ -95,19 +95,22 @@ $(document).ready(function(){
     // Example usage
     var i;
 
+    $("#pinboard").on("drop", function(event){drop(event.originalEvent)})
+                  .on("dragover", function(event){drag_over(event.originalEvent)});
+
     $(".set-location").click(function(){
         toggle_map();
     });
-    
+
     $("#search-form").submit(function(event){
         event.preventDefault();
-        
+
         var query = $("#search-input").val();
         search(query);
         $(this).trigger("reset");
-        
+
     });
-    
+
     var display_cuisines = ["American",
                    "Chinese",
                    "Fish & Chips",
@@ -118,7 +121,7 @@ $(document).ready(function(){
                    "Pizza",
                    "Seafood",
                    "Vegetarian"];
-    
+
     var metrics = ["Cheap",
                   "Expensive",
                   "Near",
@@ -129,11 +132,11 @@ $(document).ready(function(){
                   "Nut-Safe",
                   "Friendly Staff",
                   "Service Speed"];
-    
+
     display_cuisines.forEach(function(value){
         createDTag($("#cuisines"), value, "cuisineTag");
     });
-    
+
     metrics.forEach(function(value){
         createDTag($("#metrics"), value, "metricTag");
     });
