@@ -14,17 +14,17 @@
     <div id="title-bar" class="pure-g">
       <div class="pure-u-5-24">
         <div id="title" class="pure-u-1-1">
-          <img src="../logo.png"></img>
+          <img id="title-image" src="../logo.png"></img>
         </div>
       </div>
       <div class="pure-u-5-24">                            <!-- Cuisine suggestions -->
         <div id="cuisine-title" class="pure-u-1-1">
-            <h1>Cuisine</h1>
+            <h1>Cuisines</h1>
         </div>
       </div>
       <div class="pure-u-5-24">
         <div id="metric-title" class="pure-u-1-1">
-          <h1>Metric Tags</h1>
+          <h1>Metrics</h1>
         </div>
       </div>
       <div class="pure-u-9-24">
@@ -90,16 +90,18 @@
       </div>
       <div class="pure-u-5-24" id="text">
         <h2>LOG<small>for testing</small></h2>
-      </div>
+
+		</div>
     </div>
 
 
       <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
       <script type="text/javascript" src="../js/restaurants.js"></script>
       <script type="text/javascript" src="../js/main.js"></script>
-      <script defer
+      <!-- <script defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms&callback=initMap">
-      </script>
+      </script> -->
+	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms&libraries=places&callback=initMap"></script>
 
   </body>
 
