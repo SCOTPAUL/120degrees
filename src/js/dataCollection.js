@@ -1,9 +1,14 @@
 
+
+//KNOWN ISSUES
+//for the last results, they are not ordered properly by associativeScore
+//about a third of the results are not displayed, due to going over the google quota limit
+
 	//global variables, because who needs good coding practice
 	var coordinates = {lat: 55.8735672, lng: -4.2925851}; //will need to get this from the marker
 	var radius = 5000; //global radius - default to 1km
-	var tags = ["Indian","Near"]; //this is where the tags go
-	var tagValues = [1,-1] //this is where each tag is given a weight from -1 to 1, should be same length as tags
+	var tags = ["Indian","doner kebabs","fine Indian cuisine","Balbir","top notch","amazing","Near"]; //this is where the tags go
+	var tagValues = [1,1,1,1,1,1,.2] //this is where each tag is given a weight from -1 to 1, should be same length as tags
 	var otherTags = []; //should remain [], will be used later
 	var otherTagValues = [];
 	var metrics = ["Cheap","Expensive","Near","Far","Highly-Rated"]; //need to list all possible cuizine types here
@@ -61,9 +66,9 @@ function initMap() {
 function sortByScore(a,b) {
 //code based on answer by users Wogan and Web_Designer on http://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value-in-javascript
   if (a.associativeScore < b.associativeScore)
-    return -1;
-  if (a.associativeScore > b.associativeScore)
     return 1;
+  if (a.associativeScore > b.associativeScore)
+    return -1;
   return 0;
 }
 
@@ -95,7 +100,7 @@ function detailedCallback(result,status){
 		if (!result.permanently_closed){
 			result.associativeScore = 0;
 			for (var j = 0; j < otherTags.length; j++){
-				var tagScore = 0; //each tag will add a value to the associativeScore from -1 to 1, which will then be multiplied by the tag
+				var tagScore = 0.0; //each tag will add a value to the associativeScore from -1 to 1, which will then be multiplied by the tag
 				var coordinates2 = {lat: result.geometry.location.lat(), lng: result.geometry.location.lng()};
 				result.distance = getDistance(coordinates2,coordinates);
 				//start by checking designated metrics tags
@@ -108,13 +113,12 @@ function detailedCallback(result,status){
 						if (result.geometry.location != undefined) {
 							
 							
-							tagscore = (((result.distance-(radius/2))*-1)/(radius/2))*otherTagValues[j];
-							
+							tagScore += (((result.distance-(radius/2))*-1)/(radius/2))*otherTagValues[j];
 						}
 					} else if (otherTags[j] == "Far") {
 						if (result.geometry.location != undefined) {
 							
-							tagscore = (((result.distance-(radius/2)))/(radius/2))*otherTagValues[j];
+							tagScore = (((result.distance-(radius/2)))/(radius/2))*otherTagValues[j];
 						}
 					} else if (otherTags[j] == "Highly-Rated") {
 						if (result.rating != undefined) { tagScore = (result.rating/5)*otherTagValues[j]; }
@@ -141,9 +145,8 @@ function detailedCallback(result,status){
 			}
 		}
 		if (done) {
-			
-			sortedResults.sort(sortByScore);
-			displayResults(sortedResults);
+			var moreSortedResults = sortedResults.sort(sortByScore);
+			displayResults(moreSortedResults);
 		}
 	}
 }
@@ -157,7 +160,7 @@ function displayResults(sortedResults){
 			if (sortedResults[i].rating != undefined) {rating = sortedResults[i].rating+"*";}
 			if (sortedResults[i].price_level != undefined) {price = sortedResults[i].price_level+"£";}
 			
-			document.getElementById('list').innerHTML += '<div class="box">' + sortedResults[i].name + "<br>" + rating + "<br>" + price + "<br>" + Math.round(sortedResults[i].distance) + " m</div>";
+			document.getElementById('list').innerHTML += '<div class="box">' + sortedResults[i].name + "<br>" + rating + "<br>" + price + "<br>" + sortedResults[i].associativeScore + "</div>";
 			//replace above line with display hexagon
 			sortedResults[i].printed = true;
 		}
