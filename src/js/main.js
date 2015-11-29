@@ -168,7 +168,7 @@ var tags = []; //this is where the tags go
 var tagValues = []; //this is where each tag is given a weight from -1 to 1, should be same length as tags
 var otherTags = []; //should remain [], will be used later
 var otherTagValues = [];
-var metrics = ["Cheap","Expensive","Near","Far","Highly-Rated"]; //need to list all possible cuizine types here
+var metrics = ["Cheap","Expensive","Near","Far","Highly Rated"]; //need to list all possible cuizine types here
 var detailedResult; //because I don't understand scope in javascript. used in function callback
 var sortedResults = [];
 var googleResults = [];
@@ -218,6 +218,9 @@ function algorithm(hashmap){
 	//start
 		//this is where the data collection starts
 		//uses global variable tags
+	currentResultCount = 0;
+	totalResults = 0;
+	ready = false;
 	getTagsFromMap(hashmap);
 	coordinates = {'lat' : get_user_location().lat(), 'lng' : get_user_location().lng()}; //will need to get this from the marker
 	var selectedCuizines = [];
@@ -288,7 +291,7 @@ function algorithm(hashmap){
 							if (result.geometry.location != undefined) {
 								tagScore = (((result.distance-(radius/2)))/(radius/2))*otherTagValues[j];
 							}
-						} else if (otherTags[j] == "Highly-Rated") {
+						} else if (otherTags[j] == "Highly Rated") {
 							if (result.rating != undefined) { tagScore = (result.rating/5)*otherTagValues[j]; }
 						}
 					}
