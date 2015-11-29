@@ -172,7 +172,9 @@ var metrics = ["Cheap","Expensive","Near","Far","Highly-Rated"]; //need to list 
 var detailedResult; //because I don't understand scope in javascript. used in function callback
 var sortedResults = [];
 var googleResults = [];
-var done;
+var ready = false;
+var totalResults = 0;
+var currentResultCount = 0;
 var searchMap;
 
 function algorithm(hashmap){
@@ -245,6 +247,7 @@ function algorithm(hashmap){
 	  if (status === google.maps.places.PlacesServiceStatus.OK) {
 		googleResults = results;
 		
+		totalResults += results.length;
 		var service = new google.maps.places.PlacesService(new google.maps.Map(document.getElementById('map')));
 		for (var i = 0; i < results.length; i++) {
 			var request = {
@@ -256,7 +259,7 @@ function algorithm(hashmap){
 		if (pagination.hasNextPage){ //check for more results
 			pagination.nextPage();
 		} else {
-			done = true;
+			ready = true;
 		}
 			
 	  }
@@ -312,10 +315,11 @@ function algorithm(hashmap){
 					result.added = true;
 				}
 			}
-			if (done) {
-				var moreSortedResults = sortedResults.sort(sortByScore);
-				displayResults(moreSortedResults);
-			}
+		}
+		currentResultCount++;
+		if (currentResultCount >= totalResults && ready){
+			var moreSortedResults = sortedResults.sort(sortByScore);
+			displayResults(moreSortedResults);
 		}
 	}
 

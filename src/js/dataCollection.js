@@ -16,11 +16,14 @@
 	var sortedResults = [];
 	var googleResults = [];
 	var done;
+	var ready = false;
+	var total = 0;
+	var currentResults = 0;
 	var cuizineTypes = ["American", "Breakfast", "Burgers", "Chicken", "Chinese", "Curry", "Desserts", "English", "Fish & Chips", "Greek", "Grill", "Healthy", "Ice Cream", "Indian", "Italian", "Japanese", "Kebab", "Lebanese", "Mediterranean", "Mexican", "Milkshakes", "Mongolian", "Oriental", "Persian", "Pizza", "Sandwhiches", "Scottish", "Spanish", "Sushi", "Tapas", "Thai", "Vegetarian", "Wraps"];
 	
 function getTagsFromMap(map){
 	tags = Object.keys(map);
-	for (int i = 0; i < tags.length; i++){
+	for (var i = 0; i < tags.length; i++){
 		tagValues.push(map[tags[i]]);
 	}
 }
@@ -86,6 +89,10 @@ function callback(results, status, pagination) { //here we need to generate the 
 	googleResults = results;
 
 	var service = new google.maps.places.PlacesService(map);
+	
+	total += results.length;
+	
+	
     for (var i = 0; i < results.length; i++) {
 		var request = {
 			placeId: results[i].place_id 
@@ -97,6 +104,7 @@ function callback(results, status, pagination) { //here we need to generate the 
 		pagination.nextPage();
 	} else {
 		done = true;
+		ready = true;
 	}
 		
   }
@@ -151,15 +159,21 @@ function detailedCallback(result,status){
 				result.added = true;
 			}
 		}
-		if (done) {
+		/*if (done) {
 			var moreSortedResults = sortedResults.sort(sortByScore);
 			displayResults(moreSortedResults);
-		}
+		}*/
+	}
+	currentResults++;
+	if (currentResults >= total && ready){
+		var moreSortedResults = sortedResults.sort(sortByScore);
+		displayResults(moreSortedResults);
 	}
 }
 
 //@param sortedResults: array of google search results sorted by associative score, each with additional attribute .associativeScore used for colors
 function displayResults(sortedResults){
+	console.log("displaying");
     for (var i = 0; i < sortedResults.length; i++) {
 		if (sortedResults[i].printed == undefined) {
 			var price = "";
