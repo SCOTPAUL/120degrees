@@ -336,11 +336,9 @@ function algorithm(hashmap){
 				if (sortedResults[i].rating != undefined) {rating = sortedResults[i].rating+"*";}
 				if (sortedResults[i].price_level != undefined) {price = sortedResults[i].price_level+"£";}
 				//console.log(sortedResults[i].associativeScore);
-				data.push([[sortedResults[i].name, rating, price, sortedResults[i].associativeScore]]);
+				data.push([sortedResults[i].name, rating, price, sortedResults[i].associativeScore]);
 				console.log([sortedResults[i].name+" "+rating+" "+price+" "+sortedResults[i].associativeScore]);
 				console.log(" ");
-				//document.getElementById('text').innerHTML += '<div class="box">' + sortedResults[i].name + "<br>" + rating + "<br>" + sortedResults[i].associativeScore + "</div>";
-				//replace above line with display hexagon
 				sortedResults[i].printed = true;
 			}
 		}
@@ -394,7 +392,6 @@ function mout(d){
 
 //enlarge hexagon when it is clicked
 var click = 0;
-var buttonText;
 function mclick(d) {
 	var e1 = d3.select(this)
 	if (click == 0) {
@@ -470,7 +467,6 @@ var margin = {top: 40, right: 40, bottom: 40, left: 40},
 	
 //Calculate the center positions of each hexagon 
 var points = [];
-//var a = [];
 var rows = data.length/8;
 var remainder = data.length % 8;
 if(remainder != 0){
@@ -480,12 +476,6 @@ var count = 0;
 for (var i = 0; i < rows && count < data.length; i++) {
     for(var j = 0; j < 8 && count < data.length; j++){
     	points.push([rad * j * 1.75 + rad, (height * 0.5) + i*120]);
-	/*if(i % 2 == 0){
-		a.push([[rad * j * 1.75 + rad, (height * 0.5) + i*150],data[count][0]]);
-	}
-	else{
-		a.push([[rad * j * 1.75, (height * 0.5) + i*115],data[count][0]]);
-	}*/
 	count++;
     }
 }
@@ -518,7 +508,7 @@ svg.append("g")
     .enter().append("path")
     .attr("class", "hexagon")
     .attr("id", function(d, i) { return "h" + i;})
-    .style("fill", function(d, i) { return color(data[i][0][3]);})
+    .style("fill", function(d, i) { return color(data[i][3]);})
     .attr("d", function (d) { return "M" + d.x + "," + d.y + hexbin.hexagon();})
     .on("mouseover", mover)
     .on("mouseout",mout)
@@ -558,7 +548,7 @@ svg.selectAll("g")
 		.append("text")
 		.text(function(d, i) {
 			console.log(data[i-1][0]);
-			return data[i-1][0][0];
+			return data[i-1][0];
 		})
 		.attr("x", function(d, i) {
 			return xarray[i-1];
@@ -575,7 +565,10 @@ svg.selectAll("g")
 		.enter()
 		.append("text")
 		.text(function(d, i) {
-			return data[i-1][0][1] ;
+			if (data[i-1][1] != ""){
+				return "Average Rating: " + data[i-1][1] ;
+			}
+			else return "";
 		})
 		.attr("x", function(d, i) {
 			return xarray[i-1];
@@ -592,7 +585,11 @@ svg.selectAll("g")
 		.enter()
 		.append("text")
 		.text(function(d, i) {
-			return data[i-1][0][2] ;
+			//console.log(data[i-1][2]);
+			if (data[i-1][2] != ""){
+				return "Price Rating: " + data[i-1][2] ;
+			}
+			else return "";
 		})
 		.attr("x", function(d, i) {
 			return xarray[i-1];
