@@ -98,8 +98,9 @@ var reverseGeocodeMarker = function(geocoder, map, textbox){
 };
 
 
+var spinner;
+
 $(document).ready(function(){
-    // Example usage
     var i;
 
     $("#pinboard, #cuisines, #metrics, #search-results").on("drop", function(event){drop(event.originalEvent)})
@@ -109,33 +110,34 @@ $(document).ready(function(){
         toggle_map();
     });
 
+    // From https://fgnass.github.io/spin.js/
     $("#generate-results").click(function(){
         /*
 		for(var [key,value] of tag_map.entries()){
             $( "#text" ).append("<br>" + key + ": " + value);
         }*/
-		var opts = {
-			lines: 13 // The number of lines to draw
-			, length: 28 // The length of each line
-			, width: 14 // The line thickness
-			, radius: 42 // The radius of the inner circle
-			, scale: 1 // Scales overall size of the spinner
-			, corners: 1 // Corner roundness (0..1)
-			, color: '#000' // #rgb or #rrggbb or array of colors
-			, opacity: 0.25 // Opacity of the lines
-			, rotate: 0 // The rotation offset
-			, direction: 1 // 1: clockwise, -1: counterclockwise
-			, speed: 1 // Rounds per second
-			, trail: 60 // Afterglow percentage
-			, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-			, zIndex: 2e9 // The z-index (defaults to 2000000000)
-			, className: 'spinner' // The CSS class to assign to the spinner
-			, shadow: false // Whether to render a shadow
-			, hwaccel: false // Whether to use hardware acceleration
-			, position: 'relative' // Element positioning
-		};
-		//var target = document.getElementById('results_display');
-		//var spinner = new Spinner(opts).spin(target);
+        var opts = {
+            lines: 13 // The number of lines to draw
+            , length: 28 // The length of each line
+            , width: 14 // The line thickness
+            , radius: 42 // The radius of the inner circle
+            , scale: 1 // Scales overall size of the spinner
+            , corners: 1 // Corner roundness (0..1)
+            , color: '#000' // #rgb or #rrggbb or array of colors
+            , opacity: 0.25 // Opacity of the lines
+            , rotate: 0 // The rotation offset
+            , direction: 1 // 1: clockwise, -1: counterclockwise
+            , speed: 1 // Rounds per second
+            , trail: 60 // Afterglow percentage
+            , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+            , zIndex: 2e9 // The z-index (defaults to 2000000000)
+            , className: 'spinner' // The CSS class to assign to the spinner
+            , shadow: false // Whether to render a shadow
+            , hwaccel: false // Whether to use hardware acceleration
+            , position: 'relative' // Element positioning
+        };
+		var target = document.getElementById('results_display');
+        spinner = new Spinner(opts).spin(target);
 		algorithm(tag_map);
     });
 
@@ -200,15 +202,15 @@ var currentResultCount = 0;
 var searchMap;
 
 function algorithm(hashmap){
-	
+
 	function getTagsFromMap(hashmap){
-		
+
 		for(var key of tag_map.keys()){
             tags.push(key);
 			tagValues.push(tag_map.get(key));
         }
 	}
-		
+
 	//code taken from user brad on http://stackoverflow.com/questions/237104/array-containsobj-in-javascript
 	function contains(array, obj) {
 		for (var i = 0; i < array.length; i++) {
@@ -225,7 +227,7 @@ function algorithm(hashmap){
 		var lat2 = b.lat*Math.PI/180;
 		var dlat = (lat2 - lat1)*Math.PI/180;
 		var dlon = (b.lng - a.lng)*Math.PI/180;
-		
+
 		var R = 6371000; // metres
 		var a = Math.sin(dlat/2) * Math.sin(dlat/2) +
 				Math.cos(lat1) * Math.cos(lat2) *
@@ -234,9 +236,9 @@ function algorithm(hashmap){
 
 		var d = R * c;
 		return d;
-		
+
 	}
-		
+
 	//start
 		//this is where the data collection starts
 		//uses global variable tags
@@ -251,11 +253,11 @@ function algorithm(hashmap){
 			selectedCuizines.push(tags[i]);
 		}
 		else {
-			otherTags.push(tags[i]); 
+			otherTags.push(tags[i]);
 			otherTagValues.push(tagValues[i]);
 		}
 	}
-	googleSearch(selectedCuizines,coordinates);	
+	googleSearch(selectedCuizines,coordinates);
 
 	function sortByScore(a,b) {
 	//code based on answer by users Wogan and Web_Designer on http://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value-in-javascript
@@ -271,12 +273,12 @@ function algorithm(hashmap){
 	// some code taken from user Gaby aka G. Petrioli at http://stackoverflow.com/questions/27725187/google-places-api-how-do-i-fetch-the-reviews
 	  if (status === google.maps.places.PlacesServiceStatus.OK) {
 		googleResults = results;
-		
+
 		totalResults += results.length;
 		var service = new google.maps.places.PlacesService(new google.maps.Map(document.getElementById('map')));
 		for (var i = 0; i < results.length; i++) {
 			var request = {
-				placeId: results[i].place_id 
+				placeId: results[i].place_id
 			};
 			//pro hax: only a certain amount of data is returned from places search. answer: search again once per restaurant for more data
 			service.getDetails(request,detailedCallback);
@@ -286,7 +288,7 @@ function algorithm(hashmap){
 		} else {
 			ready = true;
 		}
-			
+
 	  }
 	}
 
@@ -387,8 +389,11 @@ function algorithm(hashmap){
 		keyword: cuizines
 	  }, callback);
 	}
-	
+
 function drawHexagons(data){
+    if(spinner){
+        spinner.stop();
+    }
 	d3.selection.prototype.moveToFront = function(){
     return this.each(function(){
 	this.parentNode.appendChild(this);
@@ -398,7 +403,7 @@ function drawHexagons(data){
 function mover(d) {
   var el = d3.select(this)
 		.transition()
-		.duration(10)		  
+		.duration(10)
 		.style("fill-opacity", 0.1)
 		.style("width", width + 10)
 		;
@@ -423,8 +428,8 @@ function mclick(d) {
 		.attr("transform", "scale(1.75)")
 		.attr("d", function (d) { return "M" + (d.x)/1.75 + "," + (d.y)/1.75 + hexbin.hexagon();});
 		e1.moveToFront();
-		
-	
+
+
 	svg.selectAll("g")
 		.append("rect")
 		.attr("width", 50)
@@ -482,13 +487,13 @@ function mclick(d) {
 function buttonclick(d){
 	alert("button clicked");
 }
-	
+
 var margin = {top: 40, right: 40, bottom: 40, left: 40},
     width = 1200 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom,
     rad = 75;
-	
-//Calculate the center positions of each hexagon 
+
+//Calculate the center positions of each hexagon
 var points = [];
 var rows = data.length/8;
 var remainder = data.length % 8;
@@ -582,7 +587,7 @@ svg.selectAll("g")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
 		.attr("text-anchor", "middle");
-		
+
 		mainText = svg.selectAll("g")
 		.data(data)
 		.enter()
@@ -599,7 +604,7 @@ svg.selectAll("g")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
 		.attr("text-anchor", "middle");
-		
+
 		mainText = svg.selectAll("g")
 		.data(data)
 		.enter()
@@ -620,7 +625,3 @@ svg.selectAll("g")
 
 };
 }
-
-
-
-
