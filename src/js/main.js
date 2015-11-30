@@ -2,11 +2,11 @@ var GOOGLE_MAPS_API_KEY = "AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms";
 var map;
 var pos_marker;
 
-var all_cuisines = ["American", "Breakfast", "Burgers", "Chicken", "Chinese", "Curry", "Desserts", "English", "Fish & Chips", "Greek", "Grill", "Healthy", "Ice Cream", "Indian", "Italian", "Japanese", "Kebab", "Lebanese", "Mediterranean", "Mexican", "Milkshakes", "Mongolian", "Oriental", "Persian", "Pizza", "Sandwhiches", "Scottish", "Seafood", "Spanish", "Sushi", "Tapas", "Thai", "Vegetarian", "Wraps"];
+var all_cuisines = ["American", "Breakfast", "Burgers", "Chicken", "Chinese", "Curry", "Desserts", "English", "Fish & Chips", "Greek", "Grill", "Healthy", "Ice Cream", "Indian", "Italian", "Japanese", "Kebab", "Lebanese", "Mediterranean", "Mexican", "Milkshakes", "Mongolian", "Oriental", "Persian", "Pizza", "Sandwhiches", "Scottish", "Spanish", "Sushi", "Tapas", "Thai", "Vegetarian", "Wraps"];
 
 
 var initMap = function() {
-    var latlng = {lat: 55.8628, lng: -4.2542}
+    var latlng = {lat: 55.8628, lng: -4.2542};
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: latlng,
@@ -50,10 +50,10 @@ var initMap = function() {
 
     set_location_text();
 
-};
+}
 
 var toggle_map = function(){
-    var map_div = $("#map");
+    map_div = $("#map");
     var visibility = map_div.css("visibility");
 
     if (visibility == "hidden"){
@@ -100,10 +100,10 @@ var reverseGeocodeMarker = function(geocoder, map, textbox){
 
 $(document).ready(function(){
     // Example usage
-    var i;
+    initMap();
 
     $("#pinboard, #cuisines, #metrics, #search-results").on("drop", function(event){drop(event.originalEvent)})
-                                                        .on("dragover", function(event){drag_over(event.originalEvent)});
+                  .on("dragover", function(event){drag_over(event.originalEvent)});
 
     $(".set-location").click(function(){
         toggle_map();
@@ -111,10 +111,10 @@ $(document).ready(function(){
 
     $("#generate-results").click(function(){
         /*
-        for(var [key,value] of tag_map.entries()){
+		for(var [key,value] of tag_map.entries()){
             $( "#text" ).append("<br>" + key + ": " + value);
         }*/
-        algorithm(tag_map);
+		algorithm(tag_map);
     });
 
     $("#search-form").submit(function(event){
@@ -157,205 +157,451 @@ $(document).ready(function(){
 
 });
 
-//KNOWN ISSUES
-//for the last results, they are not ordered properly by associativeScore
-//about a third of the results are not displayed, due to going over the google quota limit
+	//KNOWN ISSUES
+	//for the last results, they are not ordered properly by associativeScore
+	//about a third of the results are not displayed, due to going over the google quota limit
 
-//global variables, because who needs good coding practice
+	//global variables, because who needs good coding practice
 var coordinates; //will need to get this from the marker
 var radius = 5000; //global radius - default to 5km
 var tags = []; //this is where the tags go
 var tagValues = []; //this is where each tag is given a weight from -1 to 1, should be same length as tags
 var otherTags = []; //should remain [], will be used later
 var otherTagValues = [];
-var metrics = ["Cheap","Expensive","Near","Far","Highly-Rated"]; //need to list all possible cuisine types here
+var metrics = ["Cheap","Expensive","Near","Far","Highly Rated"]; //need to list all possible cuizine types here
 var detailedResult; //because I don't understand scope in javascript. used in function callback
 var sortedResults = [];
 var googleResults = [];
-var done;
+var ready = false;
+var totalResults = 0;
+var currentResultCount = 0;
 var searchMap;
 
 function algorithm(hashmap){
-    
-    function getTagsFromMap(hashmap){
-        
-        for(var key of tag_map.keys()){
+	
+	function getTagsFromMap(hashmap){
+		
+		for(var key of tag_map.keys()){
             tags.push(key);
-            tagValues.push(tag_map.get(key));
+			tagValues.push(tag_map.get(key));
         }
-    }
-        
-    //code taken from user brad on http://stackoverflow.com/questions/237104/array-containsobj-in-javascript
-    function contains(array, obj) {
-        for (var i = 0; i < array.length; i++) {
-            if (array[i] === obj) {
-                return true;
-            }
-        }
-        return false;
-    }
+	}
+		
+	//code taken from user brad on http://stackoverflow.com/questions/237104/array-containsobj-in-javascript
+	function contains(array, obj) {
+		for (var i = 0; i < array.length; i++) {
+			if (array[i] === obj) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    // from http://www.movable-type.co.uk/scripts/latlong.html
-    function getDistance(a,b){
-        var lat1 = a.lat*Math.PI/180;
-        var lat2 = b.lat*Math.PI/180;
-        var dlat = (lat2 - lat1)*Math.PI/180;
-        var dlon = (b.lng - a.lng)*Math.PI/180;
-        
-        var R = 6371000; // metres
-        var a = Math.sin(dlat/2) * Math.sin(dlat/2) +
-                Math.cos(lat1) * Math.cos(lat2) *
-                Math.sin(dlon/2) * Math.sin(dlon/2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	// from http://www.movable-type.co.uk/scripts/latlong.html
+	function getDistance(a,b){
+		var lat1 = a.lat*Math.PI/180;
+		var lat2 = b.lat*Math.PI/180;
+		var dlat = (lat2 - lat1)*Math.PI/180;
+		var dlon = (b.lng - a.lng)*Math.PI/180;
+		
+		var R = 6371000; // metres
+		var a = Math.sin(dlat/2) * Math.sin(dlat/2) +
+				Math.cos(lat1) * Math.cos(lat2) *
+				Math.sin(dlon/2) * Math.sin(dlon/2);
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-        var d = R * c;
-        return d;
-        
-    }
-        
-    //start
-        //this is where the data collection starts
-        //uses global variable tags
-    getTagsFromMap(hashmap);
-    coordinates = {'lat' : get_user_location().lat(), 'lng' : get_user_location().lng()}; //will need to get this from the marker
-    var selectedCuizines = [];
-    for (var i = 0; i < tags.length; i++){
-        if (contains(all_cuisines,tags[i]) && tagValues[i] > 0) {
-            selectedCuizines.push(tags[i]);
-        }
-        else {
-            otherTags.push(tags[i]); 
-            otherTagValues.push(tagValues[i]);
-        }
-    }
-    googleSearch(selectedCuizines,coordinates);    
+		var d = R * c;
+		return d;
+		
+	}
+		
+	//start
+		//this is where the data collection starts
+		//uses global variable tags
+	currentResultCount = 0;
+	totalResults = 0;
+	ready = false;
+	getTagsFromMap(hashmap);
+	coordinates = {'lat' : get_user_location().lat(), 'lng' : get_user_location().lng()}; //will need to get this from the marker
+	var selectedCuizines = [];
+	for (var i = 0; i < tags.length; i++){
+		if (contains(all_cuisines,tags[i]) && tagValues[i] > 0) {
+			selectedCuizines.push(tags[i]);
+		}
+		else {
+			otherTags.push(tags[i]); 
+			otherTagValues.push(tagValues[i]);
+		}
+	}
+	googleSearch(selectedCuizines,coordinates);	
 
-    function sortByScore(a,b) {
-    //code based on answer by users Wogan and Web_Designer on http://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value-in-javascript
-      if (a.associativeScore < b.associativeScore)
-        return 1;
-      if (a.associativeScore > b.associativeScore)
-        return -1;
-      return 0;
-    }
+	function sortByScore(a,b) {
+	//code based on answer by users Wogan and Web_Designer on http://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value-in-javascript
+	  if (a.associativeScore < b.associativeScore)
+		return 1;
+	  if (a.associativeScore > b.associativeScore)
+		return -1;
+	  return 0;
+	}
 
-    function callback(results, status, pagination) { //here we need to generate the associative score for each place and pass results to the hexagons
-    //uses global variables otherTags, otherTagValues, detailedResult
-    // some code taken from user Gaby aka G. Petrioli at http://stackoverflow.com/questions/27725187/google-places-api-how-do-i-fetch-the-reviews
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        googleResults = results;
-        
-        var service = new google.maps.places.PlacesService(new google.maps.Map(document.getElementById('map')));
-        for (var i = 0; i < results.length; i++) {
-            var request = {
-                placeId: results[i].place_id 
-            };
-            //pro hax: only a certain amount of data is returned from places search. answer: search again once per restaurant for more data
-            service.getDetails(request,detailedCallback);
-        }
-        if (pagination.hasNextPage){ //check for more results
-            pagination.nextPage();
-        } else {
-            done = true;
-        }
-            
-      }
-    }
+	function callback(results, status, pagination) { //here we need to generate the associative score for each place and pass results to the hexagons
+	//uses global variables otherTags, otherTagValues, detailedResult
+	// some code taken from user Gaby aka G. Petrioli at http://stackoverflow.com/questions/27725187/google-places-api-how-do-i-fetch-the-reviews
+	  if (status === google.maps.places.PlacesServiceStatus.OK) {
+		googleResults = results;
+		
+		totalResults += results.length;
+		var service = new google.maps.places.PlacesService(new google.maps.Map(document.getElementById('map')));
+		for (var i = 0; i < results.length; i++) {
+			var request = {
+				placeId: results[i].place_id 
+			};
+			//pro hax: only a certain amount of data is returned from places search. answer: search again once per restaurant for more data
+			service.getDetails(request,detailedCallback);
+		}
+		if (pagination.hasNextPage){ //check for more results
+			pagination.nextPage();
+		} else {
+			ready = true;
+		}
+			
+	  }
+	}
 
-    function detailedCallback(result,status){
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-            if (!result.permanently_closed){
-                result.associativeScore = 0;
-                for (var j = 0; j < otherTags.length; j++){
-                    var tagScore = 0.0; //each tag will add a value to the associativeScore from -1 to 1, which will then be multiplied by the tag
-                    var coordinates2 = {lat: result.geometry.location.lat(), lng: result.geometry.location.lng()};
-                    //console.log(coordinates);
-                    result.distance = getDistance(coordinates2,coordinates);
-                    //start by checking designated metrics tags
-                    if (contains(metrics,otherTags[j])){
-                        if (otherTags[j] == "Cheap") {
-                            if (result.price_level != undefined) { tagScore = (((result.price_level-4) * -1)/4)*otherTagValues[j]; }
-                        } else if (otherTags[j] == "Expensive") {
-                            if (result.price_level != undefined) { tagScore = (result.price_level/4)*otherTagValues[j]; }
-                        } else if (otherTags[j] == "Near") {
-                            if (result.geometry.location != undefined) {
-                                tagScore += (((result.distance-(radius/2))*-1)/(radius/2))*otherTagValues[j];
-                            }
-                        } else if (otherTags[j] == "Far") {
-                            if (result.geometry.location != undefined) {
-                                tagScore = (((result.distance-(radius/2)))/(radius/2))*otherTagValues[j];
-                            }
-                        } else if (otherTags[j] == "Highly-Rated") {
-                            if (result.rating != undefined) { tagScore = (result.rating/5)*otherTagValues[j]; }
-                        }
-                    }
-                    //then parse reviews for other tags
-                    else {
-                        var reviews = result.reviews;
-                        if (reviews != undefined){
-                            for (var k = 0; k < reviews.length; k++){
-                                if (reviews[k].text.search(otherTags[j]) != -1){
-                                    tagScore++;
-                                }
-                            }
-                            tagScore /= reviews.length;
-                            tagScore *= otherTagValues[j];
-                        }
-                    }
-                result.associativeScore += tagScore;
-                console.log(" ");
-                }
-                if (result.added == undefined){
-                    if (result.associativeScore > 1) { result.associativeScore = 1; }
-                    else if (result.associativeScore < -1) { result.associativeScore = -1; }
-                    sortedResults.push(result);
-                    result.added = true;
-                }
-            }
-            if (done) {
-                var moreSortedResults = sortedResults.sort(sortByScore);
-                displayResults(moreSortedResults);
-            }
-        }
-    }
+	function detailedCallback(result,status){
+		if (status == google.maps.places.PlacesServiceStatus.OK) {
+			if (!result.permanently_closed){
+				result.associativeScore = 0;
+				for (var j = 0; j < otherTags.length; j++){
+					var tagScore = 0.0; //each tag will add a value to the associativeScore from -1 to 1, which will then be multiplied by the tag
+					var coordinates2 = {lat: result.geometry.location.lat(), lng: result.geometry.location.lng()};
+					//console.log(coordinates);
+					result.distance = getDistance(coordinates2,coordinates);
+					//start by checking designated metrics tags
+					if (contains(metrics,otherTags[j])){
+						if (otherTags[j] == "Cheap") {
+							if (result.price_level != undefined) { tagScore = (((result.price_level-4) * -1)/4)*otherTagValues[j]; }
+						} else if (otherTags[j] == "Expensive") {
+							if (result.price_level != undefined) { tagScore = (result.price_level/4)*otherTagValues[j]; }
+						} else if (otherTags[j] == "Near") {
+							if (result.geometry.location != undefined) {
+								tagScore += (((result.distance-(radius/2))*-1)/(radius/2))*otherTagValues[j];
+							}
+						} else if (otherTags[j] == "Far") {
+							if (result.geometry.location != undefined) {
+								tagScore = (((result.distance-(radius/2)))/(radius/2))*otherTagValues[j];
+							}
+						} else if (otherTags[j] == "Highly Rated") {
+							if (result.rating != undefined) { tagScore = (result.rating/5)*otherTagValues[j]; }
+						}
+					}
+					//then parse reviews for other tags
+					else {
+						var reviews = result.reviews;
+						if (reviews != undefined){
+							for (var k = 0; k < reviews.length; k++){
+								if (reviews[k].text.search(otherTags[j]) != -1){
+									tagScore++;
+								}
+							}
+							tagScore /= reviews.length;
+							tagScore *= otherTagValues[j];
+						}
+					}
+				result.associativeScore += tagScore;
+				console.log(" ");
+				}
+				if (result.added == undefined){
+					if (result.associativeScore > 1) { result.associativeScore = 1; }
+					else if (result.associativeScore < -1) { result.associativeScore = -1; }
+					sortedResults.push(result);
+					result.added = true;
+				}
+			}
+		}
+		currentResultCount++;
+		if (currentResultCount >= totalResults && ready){
+			var moreSortedResults = sortedResults.sort(sortByScore);
+			displayResults(moreSortedResults);
+		}
+	}
 
-    //@param sortedResults: array of google search results sorted by associative score, each with additional attribute .associativeScore used for colors
-    function displayResults(sortedResults){
-        for (var i = 0; i < sortedResults.length; i++) {
-            if (sortedResults[i].printed == undefined) {
-                var price = "";
-                var rating = "";
-                if (sortedResults[i].rating != undefined) {rating = sortedResults[i].rating+"*";}
-                if (sortedResults[i].price_level != undefined) {price = sortedResults[i].price_level+"£";}
-                document.getElementById('text').innerHTML += '<div class="box">' + sortedResults[i].name + "<br>" + rating + "<br>" + sortedResults[i].associativeScore + "</div>";
-                //replace above line with display hexagon
-                sortedResults[i].printed = true;
-            }
-        }
-    }
+	//@param sortedResults: array of google search results sorted by associative score, each with additional attribute .associativeScore used for colors
+	var data = [];
+	function displayResults(sortedResults){
+		for (var i = 0; i < sortedResults.length; i++) {
+			if (sortedResults[i].printed == undefined) {
+				var price = "";
+				var rating = "";
+				if (sortedResults[i].rating != undefined) {rating = sortedResults[i].rating+"*";}
+				if (sortedResults[i].price_level != undefined) {price = sortedResults[i].price_level+"£";}
+				//console.log(sortedResults[i].associativeScore);
+				data.push([sortedResults[i].name, rating, price, sortedResults[i].associativeScore]);
+				console.log([sortedResults[i].name+" "+rating+" "+price+" "+sortedResults[i].associativeScore]);
+				console.log(" ");
+				sortedResults[i].printed = true;
+			}
+		}
+		drawHexagons(data);
+	}
 
-    //function for the preliminary google search - assigning associative scores comes later
-    //@param selectedCuizines: string array denoting cuizine keywords eg ['indian','chinese',etc]
-    //@param location: tuple {lat: double, lng: double}
-    function googleSearch(selectedCuizines, location) {
-        var service = new google.maps.places.PlacesService(new google.maps.Map(document.getElementById('map')));
-        var cuizines = "";
-        if (selectedCuizines.length==1) cuizines = selectedCuizines[0];
-        else if (selectedCuizines.length>1){
-            for (var i = 0; i < selectedCuizines.length; i++){
-                cuizines += "(" + selectedCuizines[i] + ")";
-                if (i+1 != selectedCuizines.length) {cuizines += " OR ";}
-            }
-        }
-      service.nearbySearch({
-        location: coordinates,
-        radius: radius,
-        types: ['food','cafe'],
-        keyword: cuizines
-      }, callback);
+	//function for the preliminary google search - assigning associative scores comes later
+	//@param selectedCuizines: string array denoting cuizine keywords eg ['indian','chinese',etc]
+	//@param location: tuple {lat: double, lng: double}
+	function googleSearch(selectedCuizines, location) {
+		var service = new google.maps.places.PlacesService(new google.maps.Map(document.getElementById('map')));
+		var cuizines = "";
+		if (selectedCuizines.length==1) cuizines = selectedCuizines[0];
+		else if (selectedCuizines.length>1){
+			for (var i = 0; i < selectedCuizines.length; i++){
+				cuizines += "(" + selectedCuizines[i] + ")";
+				if (i+1 != selectedCuizines.length) {cuizines += " OR ";}
+			}
+		}
+	  service.nearbySearch({
+		location: coordinates,
+		radius: radius,
+		types: ['food','cafe'],
+		keyword: cuizines
+	  }, callback);
+	}
+	
+function drawHexagons(data){
+	d3.selection.prototype.moveToFront = function(){
+    return this.each(function(){
+	this.parentNode.appendChild(this);
+    });
+};
+
+function mover(d) {
+  var el = d3.select(this)
+		.transition()
+		.duration(10)		  
+		.style("fill-opacity", 0.1)
+		.style("width", width + 10)
+		;
+}
+
+function mout(d){
+	var el = d3.select(this)
+	   .transition()
+	   .duration(1000)
+	   .style("fill-opacity", 1)
+	   ;
+}
+
+//enlarge hexagon when it is clicked
+var click = 0;
+function mclick(d) {
+	var e1 = d3.select(this)
+	if (click == 0) {
+		click = 1;
+	    e1.transition()
+		.attr("transform", "scale(1.75)")
+		.attr("d", function (d) { return "M" + (d.x)/1.75 + "," + (d.y)/1.75 + hexbin.hexagon();});
+		e1.moveToFront();
+		
+	
+	svg.selectAll("g")
+		.append("rect")
+		.attr("width", 50)
+		.attr("height", 30)
+		.attr("x", (d.x - 40))
+		.attr("y", (d.y + 20))
+		.attr("fill", "gainsboro")
+		.on("click", buttonclick)
+		.moveToFront();
+
+		//adds text to buttons
+		button1Text = svg.selectAll("g")
+		.append("text")
+		.text("Order")
+		.attr("x", (d.x - 25))
+		.attr("y", (d.y + 40))
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.moveToFront();
+
+	svg.selectAll("g")
+		.append("rect")
+		.attr("width", 50)
+		.attr("height", 30)
+		.attr("x", (d.x + 30))
+		.attr("y", (d.y + 20))
+		.attr("fill", "gainsboro")
+		.on("click", buttonclick)
+		.moveToFront();
+
+		//adds text to buttons
+		button2Text = svg.selectAll("g")
+		.append("text")
+		.text("Map")
+		.attr("x", (d.x + 40))
+		.attr("y", (d.y + 40))
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.moveToFront();
+
+
+	}
+	else {
+		click = 0;
+	    e1.transition()
+		.attr("transform", "scale(1)")
+		.attr("d", function (d) { return "M" + (d.x) + "," + (d.y) + hexbin.hexagon();});
+
+	    svg.selectAll("rect").remove();
+		button1Text.remove();
+		button2Text.remove();
+	}
+}
+
+function buttonclick(d){
+	alert("button clicked");
+}
+	
+var margin = {top: 40, right: 40, bottom: 40, left: 40},
+    width = 1200 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom,
+    rad = 75;
+	
+//Calculate the center positions of each hexagon 
+var points = [];
+var rows = data.length/8;
+var remainder = data.length % 8;
+if(remainder != 0){
+	rows++;
+}
+var count = 0;
+for (var i = 0; i < rows && count < data.length; i++) {
+    for(var j = 0; j < 8 && count < data.length; j++){
+    	points.push([rad * j * 1.75 + rad, (height * 0.5) + i*120]);
+	count++;
     }
-    
-    
+}
+
+//make each hexagon a different shade
+var color = d3.scale.linear()
+    .domain([-1, 1])
+    .range(["white", "steelblue"])
+    .interpolate(d3.interpolateLab);
+
+var hexbin = d3.hexbin()
+	.size([width, height])
+    .radius(rad);
+
+var x = d3.scale.identity()
+    .domain([0, width]);
+
+var y = d3.scale.linear()
+    .domain([0, height])
+    .range([height, 0]);
+
+var svg = d3.select("#results_display").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+
+//Draw the hexagons
+svg.append("g")
+    .selectAll(".hexagon")
+    .data(hexbin(points))
+    .enter().append("path")
+    .attr("class", "hexagon")
+    .attr("id", function(d, i) { return "h" + i;})
+    .style("fill", function(d, i) { return color(data[i][3]);})
+    .attr("d", function (d) { return "M" + d.x + "," + d.y + hexbin.hexagon();})
+    .on("mouseover", mover)
+    .on("mouseout",mout)
+    .on("click", mclick);
+
+var xarray = [];
+var yarray = [];
+for(var k = 0; k < data.length; k++){
+	var d = d3.select("#h" + k).attr("d");
+	var newX;
+	var newY;
+	var startx = 1;
+	var endx;
+	var starty;
+	var endy;
+	for(var m = 0; m < d.length; m++){
+		if (d.charAt(m) == ",") {
+			endx = m;
+			starty = m+1;
+		}
+		else if (d.charAt(m) == "m"){
+			endy = m;
+			break;
+		}
+ 	}
+	newX = d.substring(startx,endx);
+	xarray.push(newX);
+	newY = d.substring(starty,endy);
+	yarray.push(newY);
+}
+
+//adds text to hexagon
+svg.selectAll("g")
+		mainText = svg.selectAll("g")
+		.data(data)
+		.enter()
+		.append("text")
+		.text(function(d, i) {
+			console.log(data[i-1][0]);
+			return data[i-1][0];
+		})
+		.attr("x", function(d, i) {
+			return xarray[i-1];
+		})
+		.attr("y", function(d, i) {
+			return yarray[i-1]-20;
+		})
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.attr("text-anchor", "middle");
+		
+		mainText = svg.selectAll("g")
+		.data(data)
+		.enter()
+		.append("text")
+		.text(function(d, i) {
+			if (data[i-1][1] != ""){
+				return "Average Rating: " + data[i-1][1] ;
+			}
+			else return "";
+		})
+		.attr("x", function(d, i) {
+			return xarray[i-1];
+		})
+		.attr("y", function(d, i) {
+			return yarray[i-1]-10;
+		})
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.attr("text-anchor", "middle");
+		
+		mainText = svg.selectAll("g")
+		.data(data)
+		.enter()
+		.append("text")
+		.text(function(d, i) {
+			//console.log(data[i-1][2]);
+			if (data[i-1][2] != ""){
+				return "Price Rating: " + data[i-1][2] ;
+			}
+			else return "";
+		})
+		.attr("x", function(d, i) {
+			return xarray[i-1];
+		})
+		.attr("y", function(d, i) {
+			return yarray[i-1];
+		})
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.attr("text-anchor", "middle");
+
+};
 }
 
 
