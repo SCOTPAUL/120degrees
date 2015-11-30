@@ -67,6 +67,8 @@ function createDTag(insertionPoint, label, colorClass){
 }
 
 function search(query){
+    query = query.charAt(0).toUpperCase() + query.substring(1);
+
     if($.inArray(query, all_cuisines) != -1){
         createDTag($("#search-results"), query, "cuisineTag");
     }
