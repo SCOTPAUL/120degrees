@@ -115,7 +115,8 @@ html, body {
     border: 1px solid rgba(0,0,0,1);
 }
 
-#result-display {
+#results_display {
+    width: 100%;
     height:48vh;
     top:0px;
 }

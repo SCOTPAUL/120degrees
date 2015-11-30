@@ -6,7 +6,7 @@ var all_cuisines = ["American", "Breakfast", "Burgers", "Chicken", "Chinese", "C
 
 
 var initMap = function() {
-    var latlng = {lat: 55.8628, lng: -4.2542}
+    var latlng = {lat: 55.8628, lng: -4.2542};
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: latlng,
@@ -114,6 +114,28 @@ $(document).ready(function(){
 		for(var [key,value] of tag_map.entries()){
             $( "#text" ).append("<br>" + key + ": " + value);
         }*/
+		var opts = {
+			lines: 13 // The number of lines to draw
+			, length: 28 // The length of each line
+			, width: 14 // The line thickness
+			, radius: 42 // The radius of the inner circle
+			, scale: 1 // Scales overall size of the spinner
+			, corners: 1 // Corner roundness (0..1)
+			, color: '#000' // #rgb or #rrggbb or array of colors
+			, opacity: 0.25 // Opacity of the lines
+			, rotate: 0 // The rotation offset
+			, direction: 1 // 1: clockwise, -1: counterclockwise
+			, speed: 1 // Rounds per second
+			, trail: 60 // Afterglow percentage
+			, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+			, zIndex: 2e9 // The z-index (defaults to 2000000000)
+			, className: 'spinner' // The CSS class to assign to the spinner
+			, shadow: false // Whether to render a shadow
+			, hwaccel: false // Whether to use hardware acceleration
+			, position: 'relative' // Element positioning
+		};
+		//var target = document.getElementById('results_display');
+		//var spinner = new Spinner(opts).spin(target);
 		algorithm(tag_map);
     });
 
@@ -336,7 +358,7 @@ function algorithm(hashmap){
 				if (sortedResults[i].rating != undefined) {rating = sortedResults[i].rating+"*";}
 				if (sortedResults[i].price_level != undefined) {price = sortedResults[i].price_level+"£";}
 				//console.log(sortedResults[i].associativeScore);
-				data.push([sortedResults[i].name, rating, price, sortedResults[i].associativeScore]);
+				data.push([[sortedResults[i].name, rating, price, sortedResults[i].associativeScore]]);
 				console.log([sortedResults[i].name+" "+rating+" "+price+" "+sortedResults[i].associativeScore]);
 				console.log(" ");
 				sortedResults[i].printed = true;
@@ -392,6 +414,7 @@ function mout(d){
 
 //enlarge hexagon when it is clicked
 var click = 0;
+var buttonText;
 function mclick(d) {
 	var e1 = d3.select(this)
 	if (click == 0) {
@@ -508,7 +531,7 @@ svg.append("g")
     .enter().append("path")
     .attr("class", "hexagon")
     .attr("id", function(d, i) { return "h" + i;})
-    .style("fill", function(d, i) { return color(data[i][3]);})
+    .style("fill", function(d, i) { return color(data[i][0][3]);})
     .attr("d", function (d) { return "M" + d.x + "," + d.y + hexbin.hexagon();})
     .on("mouseover", mover)
     .on("mouseout",mout)
@@ -548,7 +571,7 @@ svg.selectAll("g")
 		.append("text")
 		.text(function(d, i) {
 			console.log(data[i-1][0]);
-			return data[i-1][0];
+			return data[i-1][0][0];
 		})
 		.attr("x", function(d, i) {
 			return xarray[i-1];
@@ -565,10 +588,7 @@ svg.selectAll("g")
 		.enter()
 		.append("text")
 		.text(function(d, i) {
-			if (data[i-1][1] != ""){
-				return "Average Rating: " + data[i-1][1] ;
-			}
-			else return "";
+			return data[i-1][0][1];
 		})
 		.attr("x", function(d, i) {
 			return xarray[i-1];
@@ -586,10 +606,7 @@ svg.selectAll("g")
 		.append("text")
 		.text(function(d, i) {
 			//console.log(data[i-1][2]);
-			if (data[i-1][2] != ""){
-				return "Price Rating: " + data[i-1][2] ;
-			}
-			else return "";
+			return data[i-1][0][2];
 		})
 		.attr("x", function(d, i) {
 			return xarray[i-1];
