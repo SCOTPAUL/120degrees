@@ -275,7 +275,7 @@ function algorithm(hashmap){
 		googleResults = results;
 
 		totalResults += results.length;
-		var service = new google.maps.places.PlacesService(new google.maps.Map(document.getElementById('map')));
+		var service = new google.maps.places.PlacesService(map);
 		for (var i = 0; i < results.length; i++) {
 			var request = {
 				placeId: results[i].place_id
@@ -373,7 +373,7 @@ function algorithm(hashmap){
 	//@param selectedCuizines: string array denoting cuizine keywords eg ['indian','chinese',etc]
 	//@param location: tuple {lat: double, lng: double}
 	function googleSearch(selectedCuizines, location) {
-		var service = new google.maps.places.PlacesService(new google.maps.Map(document.getElementById('map')));
+		var service = new google.maps.places.PlacesService(map);
 		var cuizines = "";
 		if (selectedCuizines.length==1) cuizines = selectedCuizines[0];
 		else if (selectedCuizines.length>1){
