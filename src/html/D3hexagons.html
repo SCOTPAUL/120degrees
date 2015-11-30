@@ -157,7 +157,6 @@ var y = d3.scale.linear()
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-    //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 //Draw the hexagons
 svg.append("g")
@@ -198,45 +197,8 @@ for(var k = 0; k < data.length; k++){
 	yarray.push(newY);
 }
 
-/*
-//adds text to the hexagon
-svg.selectAll("text")
-   .data(points)
-   .enter()
-   .append("text")
-   .text(function(d, i) {
-	return data[i][0];
-   })
-   .attr("x", function(d) {
-	return d[0];
-   })
-   .attr("y", function(d) {
-	return d[1];
-   })
-   .attr("font-family", "sans-serif")
-   .attr("font-size", "11px")
-   .attr("fill", "red");
-*/
-
+//adds text to hexagon
 svg.selectAll("g")
-		//.data(data)
-		//.enter()
-   		//.append("rect")
-		//.attr("width", 100)
-		//.attr("height", 30)
-		//TODO: off by one error
-		//.attr("x", function(d, i) {
-		//	console.log(i);
-		//	return xarray[i-1]- radius/2;
-		//})
-		//.attr("y", function(d, i) {
-		//	return yarray[i-1];
-		//})
-		//.attr("fill", "yellow")
-		//.on("click", buttonclick)
-		//.moveToFront();
-
-		//adds text to hexagon
 		mainText = svg.selectAll("g")
 		.data(data)
 		.enter()
@@ -253,7 +215,6 @@ svg.selectAll("g")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
 		.attr("text-anchor", "middle");
-		//.moveToFront();
 		
 		mainText = svg.selectAll("g")
 		.data(data)
@@ -288,54 +249,6 @@ svg.selectAll("g")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
 		.attr("text-anchor", "middle");
-
-/*
-//adds buttons
-svg.selectAll("rect")
-   .data(points)
-   .enter()
-   .append("rect")
-   .attr("width", 50)
-   .attr("height", 30)
-   .attr("x", function(d) {
-	return (d[0] - 20);
-   })
-   .attr("y", function(d) {
-	return (d[1] + 20);
-   })
-   .attr("fill", "gainsboro")
-   .on("click", buttonclick);
-
-svg.selectAll("g")
-   .data(points)
-   .enter()
-   .append("rect")
-   .attr("width", 50)
-   .attr("height", 30)
-   .attr("x", function(d) {
-	return (d[0]);
-   })
-   .attr("y", function(d) {
-	return (d[1]);
-   })
-   .attr("fill", "black")
-   .on("click", buttonclick);
-
-//adds text to buttons
-svg.selectAll("g")
-   .data(points)
-   .enter()
-   .append("text")
-   .text("Order")
-   .attr("x", function(d) {
-	return (d[0] - 15);
-   })
-   .attr("y", function(d) {
-	return (d[1] + 40);
-   })
-   .attr("font-family", "sans-serif")
-   .attr("font-size", "11px");
-*/
 
 </script>
 
