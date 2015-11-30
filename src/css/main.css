@@ -115,6 +115,11 @@ html, body {
     border: 1px solid rgba(0,0,0,1);
 }
 
+#result-display {
+    height:48vh;
+    top:0px;
+}
+
 .dTag {
     position:  relative;
     display: inline-block;
