@@ -360,7 +360,7 @@ function algorithm(hashmap){
 				if (sortedResults[i].rating != undefined) {rating = sortedResults[i].rating+"*";}
 				if (sortedResults[i].price_level != undefined) {price = sortedResults[i].price_level+"£";}
 				//console.log(sortedResults[i].associativeScore);
-                data.push([sortedResults[i].name, rating, price, sortedResults[i].associativeScore, sortedResults[i].website, sortedResults[i].url]);
+                data.push([sortedResults[i].name, rating, price, sortedResults[i].associativeScore, sortedResults[i].website, sortedResults[i].url, sortedResults[i].formatted_phone_number]);
 				console.log([sortedResults[i].name+" "+rating+" "+price+" "+sortedResults[i].associativeScore]);
 				console.log(" ");
 				sortedResults[i].printed = true;
@@ -438,7 +438,7 @@ function mclick(d) {
 		.attr("fill", "gainsboro")
 		.on("click", function(d, i){
 			if (data[e1.attr("id").substring(1)][4] == undefined){
-				alert("This place does not have a website");
+				alert("This place does not have a website.\n Phone number: " + data[e1.attr("id").substring(1)][6]);
 			}
 			else {
 				window.open(data[e1.attr("id").substring(1)][4]);
