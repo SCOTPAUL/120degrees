@@ -437,7 +437,12 @@ function mclick(d) {
 		.attr("y", (d.y + 20))
 		.attr("fill", "gainsboro")
 		.on("click", function(d, i){
-			window.open(data[i][4]);
+			if (data[e1.attr("id").substring(1)][4] == undefined){
+				alert("This place does not have a website");
+			}
+			else {
+				window.open(data[e1.attr("id").substring(1)][4]);
+			}
 		})
 		.moveToFront();
 
@@ -459,7 +464,8 @@ function mclick(d) {
 		.attr("y", (d.y + 20))
 		.attr("fill", "gainsboro")
 		.on("click", function(d, i){
-			window.open(data[i][5]);
+			//console.log(e1.attr("id").substring(1))
+			window.open(data[e1.attr("id").substring(1)][5]);
 		})
 		.moveToFront();
 
