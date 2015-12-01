@@ -360,7 +360,7 @@ function algorithm(hashmap){
 				if (sortedResults[i].rating != undefined) {rating = sortedResults[i].rating+"*";}
 				if (sortedResults[i].price_level != undefined) {price = sortedResults[i].price_level+"£";}
 				//console.log(sortedResults[i].associativeScore);
-                data.push([sortedResults[i].name, rating, price, sortedResults[i].associativeScore]);
+                data.push([sortedResults[i].name, rating, price, sortedResults[i].associativeScore, sortedResults[i].website, sortedResults[i].url]);
 				console.log([sortedResults[i].name+" "+rating+" "+price+" "+sortedResults[i].associativeScore]);
 				console.log(" ");
 				sortedResults[i].printed = true;
@@ -436,7 +436,9 @@ function mclick(d) {
 		.attr("x", (d.x - 40))
 		.attr("y", (d.y + 20))
 		.attr("fill", "gainsboro")
-		.on("click", buttonclick)
+		.on("click", function(d, i){
+			window.open(data[i][4]);
+		})
 		.moveToFront();
 
 		//adds text to buttons
@@ -456,7 +458,9 @@ function mclick(d) {
 		.attr("x", (d.x + 30))
 		.attr("y", (d.y + 20))
 		.attr("fill", "gainsboro")
-		.on("click", buttonclick)
+		.on("click", function(d, i){
+			window.open(data[i][5]);
+		})
 		.moveToFront();
 
 		//adds text to buttons
@@ -481,10 +485,6 @@ function mclick(d) {
 		button1Text.remove();
 		button2Text.remove();
 	}
-}
-
-function buttonclick(d){
-	alert("button clicked");
 }
 
 var margin = {top: 40, right: 40, bottom: 40, left: 40},
