@@ -34,30 +34,33 @@ html, body {
 #title-image {
     position: absolute;
     top:1vh;
-    left: 2vw;
+    left: 46vw;
     vertical-align: middle;
+    width: 8vw;
   }
 
 #top-section {
   background-color: rgb(147, 200, 200);
-  height:35vh;
+  height:40vh;
   width:100%;
+  padding-top: 3vh;
 }
 
 
 #bottom-section {
   background-color: white;
-  height:45vh;
+  height:35vh;
   width:100%;
   bottom: 0px;
 }
 
 #middle-section {
   background-color: rgb(233,237,241);
-  height:10%;
+  height:12vh;
   border-top: 2px solid rgb(47,53,74);
   border-bottom: 2px solid rgb(47,53,74);
   width:100%;
+  z-index: 4200;
 }
 
 #mid-left {
@@ -131,13 +134,14 @@ html, body {
 #pinboard > span {
     position: relative;
     font-weight: bold;
-    font-size: large;
-    top: 50%;
+    font-size: 26px;
+    top: 33%;
     transform: translateY(-50%);
 }
 
 #pinboard-minus {
     float: left;
+    left: 7px;
 }
 
 #pinboard-instruction {
@@ -146,6 +150,8 @@ html, body {
 
 #pinboard-plus {
     float: right;
+    right: 7px;
+    color: white;
 }
 
 #bottom-section {
@@ -155,9 +161,11 @@ html, body {
 
 #results_display {
     width: 100%;
-    height:48vh;
-    top:0px;
+    height:20vh;
+    position: absolute;
+    top:64vh;
     text-align: center;
+    z-index: 10;
 }
 
 .dTag {
@@ -168,11 +176,11 @@ html, body {
     margin: 1vh 1vw 1vh 0.5vw;
     left: 0vw;
     width: 6.25vw;
-    height: 2.5vh;
+    height: 3.2vh;
     border: 1px thin groove rgba(0,100,0,0.5);
     border-radius: 10vw;
     padding: 6px;
-    line-height: 25px;
+    line-height: 30px;
     z-index: 200;
     overflow: hidden;
 }

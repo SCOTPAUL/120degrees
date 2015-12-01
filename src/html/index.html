@@ -15,21 +15,21 @@
 
     <div id="title-bar" class="pure-g">
       <div class="pure-u-5-24">
-        <div id="title" class="pure-u-1-1">
-          <img id="title-image" src="../logo.png"></img>
-        </div>
-      </div>
-      <div class="pure-u-5-24">                            <!-- Cuisine suggestions -->
         <div id="cuisine-title" class="pure-u-1-1">
             <h1>Cuisines</h1>
         </div>
       </div>
-      <div class="pure-u-5-24">
+      <div class="pure-u-5-24">                            <!-- Cuisine suggestions -->
         <div id="metric-title" class="pure-u-1-1">
           <h1>Metrics</h1>
         </div>
       </div>
-      <div id="map-buttons" class="pure-u-9-24">
+      <div class="pure-u-6-24">
+        <div id="title" class="pure-u-1-1">
+          <img id="title-image" src="../logo.png"></img>
+        </div>
+      </div>
+      <div id="map-buttons" class="pure-u-8-24">
           <div>
               <button id="set-new-location" type="button" class="pure-button pure-button-primary new-location">Get Location <span class="fa fa-location-arrow"></span></button>
               <button type="button" class="pure-button pure-button-primary set-location"><span id="location"></span> | <span id="set-location-text">Set Location <span class="fa fa-caret-down"></span></span></button>
@@ -38,18 +38,6 @@
     </div>
 
     <div id="top-section" class="pure-g">              <!-- search and suggestions -->
-        <div id="search-container" class="pure-u-5-24">
-          <div id="search-field" class="pure-u-1-1">
-            <form id="search-form" class="pure-form">
-              <fieldset>
-                  <legend>Or Search for your own tag</legend>
-                  <input id="search-input" type="text">
-                  <button type="submit" class="pure-button pure-button-primary">Search</button>
-              </fieldset>
-            </form>
-          </div>
-          <div id="search-results"></div>
-        </div>
         <div class="pure-u-5-24">
           <div id="cuisine-suggestions">
               <div id="cuisines"></div>
@@ -60,7 +48,19 @@
               <div id="metrics"></div>
           </div>
         </div>
-        <div id="map-container" class="pure-u-9-24">                              <!-- Map container overlaying functionality explanation -->
+        <div id="search-container" class="pure-u-6-24">
+          <div id="search-field" class="pure-u-1-1">
+            <form id="search-form" class="pure-form">
+              <fieldset>
+                  <legend>Can't find what you fancy? Search for your own!</legend>
+                  <input id="search-input" type="text">
+                  <button type="submit" class="pure-button pure-button-primary">Search</button>
+              </fieldset>
+            </form>
+          </div>
+          <div id="search-results"></div>
+        </div>
+        <div id="map-container" class="pure-u-8-24">                              <!-- Map container overlaying functionality explanation -->
           <div class="pure-u-1-1">
             <div id="map"></div>
           </div>
@@ -96,7 +96,7 @@
     <div id="bottom-section" class="pure-g">
 
       <!-- THIS SECTION WILL NEED UPDATING WHEN HEXAGONAL RESULTS ARE READY TO BE DISPLAYED -->
-      <div id="results_display" class="pure-u-18-24" style="height:48vh; top:0px">  <!-- HEX RESULTS DISPLAY HERE -->
+      <div id="results_display" class="pure-u-1-1">  <!-- HEX RESULTS DISPLAY HERE -->
       </div>
     </div>
 
