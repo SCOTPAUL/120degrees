@@ -448,7 +448,7 @@ function mclick(d) {
 		.attr("fill", "gainsboro")
 		.on("click", function(d, i){
 			if (data[e1.attr("id").substring(1)][4] == undefined){
-				alert("This place does not have a website.\n Phone number: " + data[e1.attr("id").substring(1)][6]);
+				alert(" " + data[e1.attr("id").substring(1)][0]+ " does not have a website.\n Phone number: " + data[e1.attr("id").substring(1)][6]);
 			}
 			else {
 				window.open(data[e1.attr("id").substring(1)][4]);
@@ -459,8 +459,8 @@ function mclick(d) {
 		//adds text to buttons
 		button1Text = svg.selectAll("g")
 		.append("text")
-		.text("Order")
-		.attr("x", (d.x - 25))
+		.text("Website")
+		.attr("x", (d.x - 35))
 		.attr("y", (d.y + 40))
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
