@@ -394,6 +394,8 @@ function drawHexagons(data){
     if(spinner){
         spinner.stop();
     }
+
+    $("svg").remove();
 	d3.selection.prototype.moveToFront = function(){
     return this.each(function(){
 	this.parentNode.appendChild(this);
