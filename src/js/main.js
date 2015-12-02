@@ -401,22 +401,20 @@ function drawHexagons(data){
 };
 
 function mover(d) {
-	if (click == 0){
   var el = d3.select(this)
 		.transition()
 		.duration(10)
 		.style("fill-opacity", 0.1)
-		.style("width", width + 10);
-	}
+		.style("width", width + 10)
+		;
 }
 
 function mout(d){
-	if (click == 0){
 	var el = d3.select(this)
 	   .transition()
 	   .duration(1000)
-	   .style("fill-opacity", 1);
-	}
+	   .style("fill-opacity", 1)
+	   ;
 }
 
 //enlarge hexagon when it is clicked
@@ -427,18 +425,7 @@ function mclick(d) {
 		click = 1;
 	    e1.transition()
 		.attr("transform", "scale(1.75)")
-		.attr("d", function (d) { return "M" + (d.x)/1.75 + "," + (d.y)/1.75 + hexbin.hexagon();})
-		.style("fill-opacity", 1);
-		e1.on("mouseout",function(){
-			e1.transition()
-			  .attr("transform", "scale(1)")
-			  .attr("d", function (d) { return "M" + (d.x) + "," + (d.y) + hexbin.hexagon();})
-			click = 0;
-			
-			svg.selectAll("rect").remove();
-			button1Text.remove();
-			button2Text.remove();
-		});
+		.attr("d", function (d) { return "M" + (d.x)/1.75 + "," + (d.y)/1.75 + hexbin.hexagon();});
 		e1.moveToFront();
 
 
@@ -451,7 +438,7 @@ function mclick(d) {
 		.attr("fill", "gainsboro")
 		.on("click", function(d, i){
 			if (data[e1.attr("id").substring(1)][4] == undefined){
-				window.alert("This place does not have a website.\n Phone number: " + data[e1.attr("id").substring(1)][6]);
+				alert("This place does not have a website.\n Phone number: " + data[e1.attr("id").substring(1)][6]);
 			}
 			else {
 				window.open(data[e1.attr("id").substring(1)][4]);
@@ -465,7 +452,6 @@ function mclick(d) {
 		.text("Order")
 		.attr("x", (d.x - 25))
 		.attr("y", (d.y + 40))
-		.attr("pointer-events", "none")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
 		.moveToFront();
@@ -478,6 +464,7 @@ function mclick(d) {
 		.attr("y", (d.y + 20))
 		.attr("fill", "gainsboro")
 		.on("click", function(d, i){
+			//console.log(e1.attr("id").substring(1))
 			window.open(data[e1.attr("id").substring(1)][5]);
 		})
 		.moveToFront();
@@ -488,14 +475,13 @@ function mclick(d) {
 		.text("Map")
 		.attr("x", (d.x + 40))
 		.attr("y", (d.y + 40))
-		.attr("pointer-events", "none")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
 		.moveToFront();
 
 
 	}
-	/*else {
+	else {
 		click = 0;
 	    e1.transition()
 		.attr("transform", "scale(1)")
@@ -504,12 +490,12 @@ function mclick(d) {
 	    svg.selectAll("rect").remove();
 		button1Text.remove();
 		button2Text.remove();
-	}*/
+	}
 }
 
 var margin = {top: 40, right: 40, bottom: 40, left: 40},
     width = 1200 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom,
+    height = 375 - margin.top - margin.bottom,
     rad = 75;
 
 //Calculate the center positions of each hexagon
@@ -519,6 +505,8 @@ var remainder = data.length % 8;
 if(remainder != 0){
 	rows++;
 }
+console.log("rows: " + rows);
+
 var count = 0;
 for (var i = 0; i < rows && count < data.length; i++) {
     for(var j = 0; j < 8 && count < data.length; j++){
@@ -527,6 +515,7 @@ for (var i = 0; i < rows && count < data.length; i++) {
     }
 }
 
+console.log("count: "+count);
 //make each hexagon a different shade
 var color = d3.scale.linear()
     .domain([-1, 1])
@@ -547,7 +536,7 @@ var y = d3.scale.linear()
 var svg = d3.select("#results_display").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-
+    console.log("W:"+width+" H:"+height);
 //Draw the hexagons
 svg.append("g")
     .selectAll(".hexagon")
@@ -603,7 +592,6 @@ svg.selectAll("g")
 		.attr("y", function(d, i) {
 			return yarray[i-1]-20;
 		})
-		.attr("pointer-events", "none")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
 		.attr("text-anchor", "middle");
@@ -624,7 +612,6 @@ svg.selectAll("g")
 		.attr("y", function(d, i) {
 			return yarray[i-1]-10;
 		})
-		.attr("pointer-events", "none")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
 		.attr("text-anchor", "middle");
@@ -646,10 +633,11 @@ svg.selectAll("g")
 		.attr("y", function(d, i) {
 			return yarray[i-1];
 		})
-		.attr("pointer-events", "none")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
 		.attr("text-anchor", "middle");
 
 };
+
+
 }
