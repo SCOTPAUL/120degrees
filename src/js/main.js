@@ -1,4 +1,4 @@
-var GOOGLE_MAPS_API_KEY = "AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms";
+﻿var GOOGLE_MAPS_API_KEY = "AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms";
 var map;
 var pos_marker;
 
@@ -510,8 +510,8 @@ var margin = {top: 40, right: 40, bottom: 40, left: 40},
 
 //Calculate the center positions of each hexagon
 var points = [];
-var rows = data.length/8;
-var remainder = data.length % 8;
+var rows = data.length/9;
+var remainder = data.length % 9;
 if(remainder != 0){
 	rows++;
 }
@@ -519,7 +519,7 @@ console.log("rows: " + rows);
 
 var count = 0;
 for (var i = 0; i < rows && count < data.length; i++) {
-    for(var j = 0; j < 8 && count < data.length; j++){
+    for(var j = 0; j < 9 && count < data.length; j++){
     	points.push([rad * j * 1.75 + rad, (height * 0.5) + i*120]);
 	    count++;
     }
