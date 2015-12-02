@@ -203,6 +203,32 @@ var searchMap;
 
 function algorithm(hashmap){
 
+	//start
+		//this is where the data collection starts
+		//uses global variable tags
+	currentResultCount = 0;
+	totalResults = 0;
+	ready = false;
+	tags = [];
+	tagValues = [];
+	otherTags = [];
+	otherTagValues = [];
+	sortedResults = [];
+	googleResults = [];
+	totalResults = 0;
+	currentResultCount = [];
+	getTagsFromMap(hashmap);
+	coordinates = {'lat' : get_user_location().lat(), 'lng' : get_user_location().lng()}; //will need to get this from the marker
+	var selectedCuizines = [];
+	for (var i = 0; i < tags.length; i++){
+		if (contains(all_cuisines,tags[i]) && tagValues[i] > 0) {
+			selectedCuizines.push(tags[i]);
+		}
+		otherTags.push(tags[i]);
+		otherTagValues.push(tagValues[i]);
+	}
+	googleSearch(selectedCuizines,coordinates);
+
 	function getTagsFromMap(hashmap){
 
 		for(var key of tag_map.keys()){
@@ -239,25 +265,7 @@ function algorithm(hashmap){
 
 	}
 
-	//start
-		//this is where the data collection starts
-		//uses global variable tags
-	currentResultCount = 0;
-	totalResults = 0;
-	ready = false;
-	getTagsFromMap(hashmap);
-	coordinates = {'lat' : get_user_location().lat(), 'lng' : get_user_location().lng()}; //will need to get this from the marker
-	var selectedCuizines = [];
-	for (var i = 0; i < tags.length; i++){
-		if (contains(all_cuisines,tags[i]) && tagValues[i] > 0) {
-			selectedCuizines.push(tags[i]);
-		}
-		else {
-			otherTags.push(tags[i]);
-			otherTagValues.push(tagValues[i]);
-		}
-	}
-	googleSearch(selectedCuizines,coordinates);
+
 
 	function sortByScore(a,b) {
 	//code based on answer by users Wogan and Web_Designer on http://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value-in-javascript
@@ -639,7 +647,21 @@ svg.selectAll("g")
 		.attr("font-size", "11px")
 		.attr("text-anchor", "middle");
 
+svg.append("text").text(function(d) {
+			console.log("lucky");
+            return "I'm feeling lucky!";
+		})
+		.attr("x", function(d) {
+			return xarray[document.getElementsByClassName("hexagon").length-1];
+		})
+		.attr("y", function(d) {
+			return yarray[document.getElementsByClassName("hexagon").length-1];
+		})
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.attr("text-anchor", "middle");
 };
+
 
 
 }
