@@ -414,7 +414,7 @@ function mover(d) {
   var el = d3.select(this)
 		.transition()
 		.duration(10)
-		.style("fill-opacity", 0.1)
+		.style("fill-opacity", 0.7)
 		.style("width", width + 10)
 		;
 }
