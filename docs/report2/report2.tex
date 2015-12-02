@@ -13,7 +13,7 @@
 \begin{document}
 \maketitle
 
-\section*{Introduction}
+\section*{City Council Briefing}
 
 Our application, 120 Degrees, offers users an experience unmatched by any other currently available. Through the use of a multidimensional query matrix, our application allows users to rank restaurants in their vicinity based on multiple axes simultaneously. The power of our application comes from the pairing of very basic, yet functional interaction from the user generating results that are highly specific to their needs. This advanced functionality is all provided with in a polished, professional product that is pleasing to the eye without any superfluous visual flair obstructing user-interaction.
 
@@ -24,8 +24,6 @@ Another element of our design which allows for users to obtain suggestions more 
 We worked very hard when building this product to ensure that functionality was not sacrificed for simplicity and vice-versa. This endeavour has left us with a product that is as easy to use as any currently available, but one that we believe will generate more specific results than any other currently available. The way in which our results are displayed was designed to best incorporate the associative ranking we give each restaurant, whilst also being both attractive and distinctive, a way to visually set our product apart from others. This distinctiveness is something we strongly believe we have achieved by displaying our results as tessellating hexagons which can expand to give more detailed information about a restaurant and which is coloured to distinguish the correlation to the user’s multidimensional query.
 
 Our product offers all of the key elements offered by similar applications, whilst also expanding on them to give users more control of the suggestions that are generated. It uses user’s location data to search by distance, it allows for searching by cuisine, price and average rating, whilst for the first time allowing users to search by these criteria concurrently, making for a much more streamlined, smoother process. All of this, in addition to being able to search for custom queries and assigning weight to any given query, delivered in a professional and intuitive environment, puts our product to the forefront of it’s field. 
-
-\section*{Briefing to the City Council}
 
 \section*{Design Requirements}
 
@@ -73,6 +71,50 @@ The first investigation measured the amount of time that it takes for a user to 
 	\item \textbf{Task 3:} Search for kosher food that isn’t American
 \end{itemize}
 
+User 1:
+Task 1: 
+Time taken: 21s
+User 1 described the design as ‘interesting, neat, and professional’, though he found the pinboard suspicious, questioning how intuitive it is.
+His performance was poor, and it took two attempts to generate the correct input.
+Task 2:
+Time taken: 51s
+User 1 described the map and the action of dropping the pin to change location as ‘tricky and time-consuming’, suggesting it would be difficult for mobile users. 
+He did not realise he could search for the ‘Thai’ tag, and spent some time questioning how to proceed.
+Task 3:
+Time taken: 13s
+User 1 said the result generation was ‘unique and interesting’. It was clear from his speed and efficiency that he had quickly learned to use the system.
+
+User 2:
+Task 1:
+Time taken: 30s
+User 2 commented that the design was ‘definitely cool’, however, he questioned how useful the ability to score tags negatively would prove. He also suggested to clarify the specification, perhaps moving it to the left side of the screen.
+He read the specification then performed the task perfectly.
+Task 2:
+Time taken: 2m, 13s
+User 2 found the custom searching cool, though the map was ‘unclear’.
+He found the map extremely difficult to use, finding his location but not understanding the drag functionality needed to change the location.
+Task 3:
+Time taken: 10s
+User 2 suggesting changing some of the metrics offered and questioned how many users would find use in ranking ‘Service speed’ lowly.
+The user was much quicker, understanding the system and using our functionality to generate the specific results.
+
+User 3:
+Task 1:
+Time taken: 1m, 21s
+User 3 found that the system was not clearly explained or intuitive, and suggested making the tips stand out.
+His first search did not match the task, not understanding the pinboard.
+
+Task 2:
+Time taken: 1m, 5s
+User 3 liked the tag creation functionality.
+User 3 spent much time on the map, but found the ability to search for tags impressive and intuitive.
+
+Task 3:
+Time taken: 11s
+User 3 commented that the highlight overlay was ‘odd’ and suggested making the hover effect fade more quickly.
+He was clearly interested with the iconic visual design decisions, however, questioned whether or not it was too bold.
+
+
 The results are shown in Table \ref{table:experiment-1}.
 
 \begin{table}[H]
@@ -88,6 +130,11 @@ The results are shown in Table \ref{table:experiment-1}.
 \caption{Experiment 1 Results \label{table:experiment-1}}
 \end{table}
 
+What our results manifested was that the map functionality was not clear, but, as shown by task 3, once the users had learned the system they were quick and efficient at generating desired results. In addition, the pinboard functionality was not immediately apparent.
+
+To rectify these issues, we first added plus and minus signs on either side of the pinboard, illustrating the functionality more clearly without requiring the reading of the specification. We then edited the on-hover effects for the hexagon results, resulting in what we believe to be a more visually smooth experience. Lastly, we changed the positioning of the instructions in the top third to make them more prominent.
+
+We took the feedback from the first round of testing into account and adjusted our design accordingly, before running the tests again, with three new users.
 
 \subsection*{Experiment 2}
 
@@ -152,6 +199,12 @@ Some of the functionality of the project required the use of third-party code an
 	\item \textbf{D3plus} (\url{http://d3plus.org/}) was used for the hexagonal display, adding to the functionality provided by D3 itself.
 \end{itemize}
 
-\section*{Conclusion}
+\section*{Issues Faced and Conclusion}
+
+The project could have been improved by spending more time on the design of the hexagonal display, or replacing it with a simpler solution. Despite this being a large focus of the project, we had a lot of problems with making the display functional and aesthetically pleasing, since D3 is a very powerful but somewhat difficult to work with library. We also had problems with integration, since we’d split into several subteams to work on different parts of the functionality, and had each made assumptions about the format of others’ work which was not necessarily correct.
+
+Some of the problems that our project faced, such as a small number of results produced when ‘Generate Results’ is pressed, would not be an issue if we had access to the paid-for Google Places API, since that would remove the rate limiting. If the council were to choose this project, then some of this could be spent on access to the Google Places API.
+
+Although these problems impacted on our solution, we managed to meet most of the design requirements that we set out for ourselves at the start of the project, and our testing showed that users reacted generally positively to the unique and interesting design and interaction with our system. 
 
 \end{document}

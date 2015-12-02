@@ -136,9 +136,10 @@ $(document).ready(function(){
             , hwaccel: false // Whether to use hardware acceleration
             , position: 'relative' // Element positioning
         };
-		var target = document.getElementById('results_display');
+	var target = document.getElementById('results_display');
         spinner = new Spinner(opts).spin(target);
-		algorithm(tag_map);
+        $(this).prop('disabled', true);
+	algorithm(tag_map);
     });
 
     $("#search-form").submit(function(event){
@@ -403,6 +404,7 @@ function drawHexagons(data){
         spinner.stop();
     }
 
+    $("#generate-results").prop("disabled", false);
     $("svg").remove();
 	d3.selection.prototype.moveToFront = function(){
     return this.each(function(){
