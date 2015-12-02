@@ -4,10 +4,6 @@ html, body {
     padding: 0;
 }
 
-#top-section {
-    height: 40vh;
-}
-
 #top-left {
     height: 10vh;
 }
@@ -43,9 +39,15 @@ html, body {
   background-color: rgb(147, 200, 200);
   height:40vh;
   width:100%;
-  padding-top: 3vh;
 }
 
+#top-section > div {
+    padding-top: 3vh;
+}
+
+#top-section > #map-container {
+    padding-top: 0;
+}
 
 #bottom-section {
   background-color: white;
@@ -230,7 +232,7 @@ html, body {
     top: 9vh;
     font-size: 20px;
     overflow:hidden;
-    height: 30vh;
+    height: 33vh;
 }
 
 .hexagon {
