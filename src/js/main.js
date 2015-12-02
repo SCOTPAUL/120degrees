@@ -546,7 +546,7 @@ var y = d3.scale.linear()
 var svg = d3.select("#results_display").append("svg")
     .style("padding-left","100px")
     .style("padding-right","100px")
-    .style("padding-top","-20px")
+    .style("padding-top","20px")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     console.log("W:"+width+" H:"+height);
