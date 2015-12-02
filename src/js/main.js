@@ -433,20 +433,26 @@ function mout(d){
 var click = 0;
 function mclick(d) {
 	var e1 = d3.select(this)
+	var border1 = 2;
+	var border2 = 0.5;
+	//var colours = [];
+	//colours.push(e1.style("fill"));
 	if (click == 0) {
 		click = 1;
 	    e1.transition()
-		.attr("transform", "scale(1.75)")
-		.attr("d", function (d) { return "M" + (d.x)/1.75 + "," + (d.y)/1.75 + hexbin.hexagon();});
-		e1.moveToFront();
+		//.attr("transform", "scale(1.75)")
+		//.attr("d", function (d) { return "M" + (d.x)/1.75 + "," + (d.y)/1.75 + hexbin.hexagon();})
+		.style("stroke-width", border1)
+		.style("fill", "LightGreen");
+		//e1.moveToFront();
 
 
 	svg.selectAll("g")
 		.append("rect")
 		.attr("width", 50)
 		.attr("height", 30)
-		.attr("x", (d.x - 40))
-		.attr("y", (d.y + 20))
+		.attr("x", (d.x - 55))
+		.attr("y", (d.y + 5))
 		.attr("fill", "gainsboro")
 		.on("click", function(d, i){
 			if (data[e1.attr("id").substring(1)][4] == undefined){
@@ -462,18 +468,19 @@ function mclick(d) {
 		button1Text = svg.selectAll("g")
 		.append("text")
 		.text("Website")
-		.attr("x", (d.x - 35))
-		.attr("y", (d.y + 40))
+		.attr("x", (d.x - 50))
+		.attr("y", (d.y + 25))
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
+		.attr("pointer-events", "none")
 		.moveToFront();
 
 	svg.selectAll("g")
 		.append("rect")
 		.attr("width", 50)
 		.attr("height", 30)
-		.attr("x", (d.x + 30))
-		.attr("y", (d.y + 20))
+		.attr("x", (d.x + 5))
+		.attr("y", (d.y + 5))
 		.attr("fill", "gainsboro")
 		.on("click", function(d, i){
 			//console.log(e1.attr("id").substring(1))
@@ -485,24 +492,29 @@ function mclick(d) {
 		button2Text = svg.selectAll("g")
 		.append("text")
 		.text("Map")
-		.attr("x", (d.x + 40))
-		.attr("y", (d.y + 40))
+		.attr("x", (d.x + 20))
+		.attr("y", (d.y + 25))
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
+		.attr("pointer-events", "none")
 		.moveToFront();
 
 
 	}
 	else {
 		click = 0;
+		//console.log(colours);
 	    e1.transition()
-		.attr("transform", "scale(1)")
-		.attr("d", function (d) { return "M" + (d.x) + "," + (d.y) + hexbin.hexagon();});
+		.style("fill", function(d) { return color(data[e1.attr("id").substring(1)][3])})
+		.style("stroke-width", border2)
+		//.attr("transform", "scale(1)")
+		//.attr("d", function (d) { return "M" + (d.x) + "," + (d.y) + hexbin.hexagon();});
 
 	    svg.selectAll("rect").remove();
 		button1Text.remove();
 		button2Text.remove();
 	}
+	//console.log(colours);
 }
 
 var margin = {top: 40, right: 40, bottom: 40, left: 40},
@@ -613,7 +625,8 @@ svg.selectAll("g")
 		})
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
-		.attr("text-anchor", "middle");
+		.attr("text-anchor", "middle")
+		.attr("pointer-events", "none");
 
 		mainText = svg.selectAll("g")
 		.data(data)
@@ -633,7 +646,8 @@ svg.selectAll("g")
 		})
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
-		.attr("text-anchor", "middle");
+		.attr("text-anchor", "middle")
+		.attr("pointer-events", "none");
 
 		mainText = svg.selectAll("g")
 		.data(data)
@@ -654,7 +668,8 @@ svg.selectAll("g")
 		})
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
-		.attr("text-anchor", "middle");
+		.attr("text-anchor", "middle")
+		.attr("pointer-events", "none");
 
 svg.append("text").text(function(d) { //extension: pro hax
             return "I'm feeling lucky!";
@@ -667,7 +682,8 @@ svg.append("text").text(function(d) { //extension: pro hax
 		})
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
-		.attr("text-anchor", "middle");
+		.attr("text-anchor", "middle")
+		.attr("pointer-events", "none");
 };
 
 
