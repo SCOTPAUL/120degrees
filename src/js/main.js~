@@ -597,7 +597,7 @@ svg.selectAll("g")
 			return data[i-1][0];
 		})
 		.attr("textLength",function(d, i) {
-			if (data[i-1][0].length > 20) return 120;
+			if (data[i-1][0].length > 25) return 120;
 		})
 		.attr("lengthAdjust","spacingAndGlyphs")
 		.attr("x", function(d, i) {
