@@ -110,6 +110,8 @@ $(document).ready(function(){
         toggle_map();
     });
 
+    $("#generate-results").prop("disabled", false);
+
     // From https://fgnass.github.io/spin.js/
     $("#generate-results").click(function(){
         /*
