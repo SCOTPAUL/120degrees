@@ -406,47 +406,44 @@ function drawHexagons(data){
 
     $("#generate-results").prop("disabled", false);
     $("svg").remove();
+	
+	//function to move elements to front
 	d3.selection.prototype.moveToFront = function(){
     return this.each(function(){
 	this.parentNode.appendChild(this);
     });
 };
 
+//changes opacity on mouse over
 function mover(d) {
   var el = d3.select(this)
 		.transition()
 		.duration(10)
 		.style("fill-opacity", 0.7)
-		.style("width", width + 10)
-		;
+		.style("width", width + 10);
 }
 
+//changes opacity back on mouse out
 function mout(d){
 	var el = d3.select(this)
 	   .transition()
 	   .duration(1000)
-	   .style("fill-opacity", 1)
-	   ;
+	   .style("fill-opacity", 1);
 }
 
-//enlarge hexagon when it is clicked
+//change colour of hexagon when it is clicked
 var click = 0;
 function mclick(d) {
 	var e1 = d3.select(this)
 	var border1 = 2;
 	var border2 = 0.5;
-	//var colours = [];
-	//colours.push(e1.style("fill"));
 	if (click == 0) {
 		click = 1;
 	    e1.transition()
-		//.attr("transform", "scale(1.75)")
-		//.attr("d", function (d) { return "M" + (d.x)/1.75 + "," + (d.y)/1.75 + hexbin.hexagon();})
 		.style("stroke-width", border1)
 		.style("fill", "LightGreen");
-		//e1.moveToFront();
 
-
+	//creates button to take user to restaurant's website, if there is no website the phone number is displayed
 	svg.selectAll("g")
 		.append("rect")
 		.attr("width", 50)
@@ -464,7 +461,7 @@ function mclick(d) {
 		})
 		.moveToFront();
 
-		//adds text to buttons
+		//add text to website button
 		button1Text = svg.selectAll("g")
 		.append("text")
 		.text("Website")
@@ -475,6 +472,7 @@ function mclick(d) {
 		.attr("pointer-events", "none")
 		.moveToFront();
 
+	//creates button to take user to restaurant's location on google maps
 	svg.selectAll("g")
 		.append("rect")
 		.attr("width", 50)
@@ -483,12 +481,11 @@ function mclick(d) {
 		.attr("y", (d.y + 5))
 		.attr("fill", "gainsboro")
 		.on("click", function(d, i){
-			//console.log(e1.attr("id").substring(1))
 			window.open(data[e1.attr("id").substring(1)][5]);
 		})
 		.moveToFront();
 
-		//adds text to buttons
+		//adds text to map button
 		button2Text = svg.selectAll("g")
 		.append("text")
 		.text("Map")
@@ -501,20 +498,16 @@ function mclick(d) {
 
 
 	}
-	else {
+	else {	//if clicked change colour but and get rid of the buttons
 		click = 0;
-		//console.log(colours);
 	    e1.transition()
 		.style("fill", function(d) { return color(data[e1.attr("id").substring(1)][3])})
 		.style("stroke-width", border2)
-		//.attr("transform", "scale(1)")
-		//.attr("d", function (d) { return "M" + (d.x) + "," + (d.y) + hexbin.hexagon();});
 
 	    svg.selectAll("rect").remove();
 		button1Text.remove();
 		button2Text.remove();
 	}
-	//console.log(colours);
 }
 
 var margin = {top: 40, right: 40, bottom: 40, left: 40},
@@ -522,6 +515,8 @@ var margin = {top: 40, right: 40, bottom: 40, left: 40},
     height = 375 - margin.top - margin.bottom,
     rad = 75;
 
+
+	
 //Calculate the center positions of each hexagon
 var points = [];
 var rows = data.length/9;
@@ -529,8 +524,6 @@ var remainder = data.length % 9;
 if(remainder != 0){
 	rows++;
 }
-console.log("rows: " + rows);
-
 var count = 0;
 for (var i = 0; i < rows && count < data.length; i++) {
     for(var j = 0; j < 9 && count < data.length; j++){
@@ -539,13 +532,13 @@ for (var i = 0; i < rows && count < data.length; i++) {
     }
 }
 
-console.log("count: "+count);
 //make each hexagon a different shade
 var color = d3.scale.linear()
     .domain([-1, 1])
     .range(["white", "steelblue"])
     .interpolate(d3.interpolateLab);
 
+//specified size of hexagon to be created
 var hexbin = d3.hexbin()
 	.size([width, height])
     .radius(rad);
@@ -557,13 +550,14 @@ var y = d3.scale.linear()
     .domain([0, height])
     .range([height, 0]);
 
+//append svg to #results_display div tag
 var svg = d3.select("#results_display").append("svg")
     .style("padding-left","100px")
     .style("padding-right","100px")
     .style("padding-top","20px")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-    console.log("W:"+width+" H:"+height);
+	
 //Draw the hexagons
 svg.append("g")
     .selectAll(".hexagon")
@@ -579,6 +573,7 @@ svg.append("g")
 
 var xarray = [];
 var yarray = [];
+//create ids for hexagons
 for(var k = 0; k < data.length; k++){
 	var d = d3.select("#h" + k).attr("d");
 	var newX;
@@ -603,14 +598,12 @@ for(var k = 0; k < data.length; k++){
 	yarray.push(newY);
 }
 
-//adds text to hexagon
-svg.selectAll("g")
+//adds restaurant name to hexagon
 		mainText = svg.selectAll("g")
 		.data(data)
 		.enter()
 		.append("text")
 		.text(function(d, i) {
-			console.log(data[i-1][0]);
 			return data[i-1][0];
 		})
 		.attr("textLength",function(d, i) {
@@ -628,6 +621,7 @@ svg.selectAll("g")
 		.attr("text-anchor", "middle")
 		.attr("pointer-events", "none");
 
+		//adds restaurant's average rating to hexagon
 		mainText = svg.selectAll("g")
 		.data(data)
 		.enter()
@@ -649,12 +643,12 @@ svg.selectAll("g")
 		.attr("text-anchor", "middle")
 		.attr("pointer-events", "none");
 
+		//adds restaurant's price rating to hexagon
 		mainText = svg.selectAll("g")
 		.data(data)
 		.enter()
 		.append("text")
 		.text(function(d, i) {
-			//console.log(data[i-1][2]);
             if (data[i-1][2] != ""){
 				return "Price Rating: " + data[i-1][2] ;
 			}
@@ -671,7 +665,8 @@ svg.selectAll("g")
 		.attr("text-anchor", "middle")
 		.attr("pointer-events", "none");
 
-svg.append("text").text(function(d) { //extension: pro hax
+//mystery hexagon
+svg.append("text").text(function(d) {
             return "I'm feeling lucky!";
 		})
 		.attr("x", function(d) {
