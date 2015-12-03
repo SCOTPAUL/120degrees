@@ -114,11 +114,7 @@ $(document).ready(function(){
 
     // From https://fgnass.github.io/spin.js/
     $("#generate-results").click(function(){
-        /*
-		for(var [key,value] of tag_map.entries()){
-            $( "#text" ).append("<br>" + key + ": " + value);
-        }*/
-        var opts = {
+       var opts = {
             lines: 13 // The number of lines to draw
             , length: 28 // The length of each line
             , width: 14 // The line thickness
@@ -184,11 +180,7 @@ $(document).ready(function(){
 
 });
 
-	//KNOWN ISSUES
-	//for the last results, they are not ordered properly by associativeScore
-	//about a third of the results are not displayed, due to going over the google quota limit
-
-	//global variables, because who needs good coding practice
+//global variables, because who needs good coding practice
 var coordinates; //will need to get this from the marker
 var radius = 5000; //global radius - default to 5km
 var tags = []; //this is where the tags go
@@ -291,7 +283,7 @@ function algorithm(hashmap){
 			var request = {
 				placeId: results[i].place_id
 			};
-			//pro hax: only a certain amount of data is returned from places search. answer: search again once per restaurant for more data
+			// Problem: only a certain amount of data is returned from places search. Solution: search again once per restaurant for more data
 			service.getDetails(request,detailedCallback);
 		}
 		if (pagination.hasNextPage){ //check for more results
@@ -310,7 +302,6 @@ function algorithm(hashmap){
 				for (var j = 0; j < otherTags.length; j++){
 					var tagScore = 0.0; //each tag will add a value to the associativeScore from -1 to 1, which will then be multiplied by the tag
 					var coordinates2 = {lat: result.geometry.location.lat(), lng: result.geometry.location.lng()};
-					//console.log(coordinates);
 					result.distance = getDistance(coordinates2,coordinates);
 					//start by checking designated metrics tags
 					if (contains(metrics,otherTags[j])){

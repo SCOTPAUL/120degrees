@@ -1,11 +1,4 @@
-# Installing
-Using [bower](http://bower.io/):
+# Usage
 
-```bash
-git clone https://github.com/SCOTPAUL/120degrees.git
-cd 120degrees/
-bower install
-```
-
-Now the main page can be loaded in the usual way.
+The index page is in `./src/html/index`. Simply load this file into your browser to use.
 
