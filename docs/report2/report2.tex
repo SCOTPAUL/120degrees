@@ -6,6 +6,9 @@
 \usepackage{graphicx}
 \usepackage{framed}
 \usepackage{float}
+\usepackage{adjustbox}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
 \usepackage{hyperref}
 \author{Paul Cowie \and Jacob Ford \and Nicole Munro \and William Kavanagh \and Ben Procter \and Pregashni Mohanarajah }
 \date{}
@@ -52,13 +55,13 @@ We were able to achieve this through its incorporation into the pinboard system 
 	\begin{center}
 		\includegraphics[scale=0.2]{newScreenshotWithResults.png}
 		\caption{Finished design with results}
-		\label{figure:finished-design-results}
+		\label{figure:finished-design-with-results}
 	\end{center}
 \end{figure}
 
-One of the key features of our design was that the results were to be displayed in a iconic hexagonal design. Originally, the plan was to have the hexagons tessellating across the screen in a variety of different covers. However, as the design process went on, we made the team decision that it would make more sense to have a gradient colour scheme which gets paler the worse the result matched the query. This can be seen in Figure \ref{figure:finished-design-with-results} where the hexagons go from left to right starting on the top left and finishing at the right of the bottom row, the shade of steel blue gradually gets fainter and fainter.
+One of the key features of our design was that the results were to be displayed in an iconic hexagonal design. Originally, the plan was to have the hexagons tessellating across the screen in a variety of different colours. However, as the design process went on, we made the team decision that it would make more sense to have a gradient colour scheme which gets paler the worse the result matched the query. This can be seen in Figure \ref{figure:finished-design-with-results} where the hexagons go from left to right starting on the top left and finishing at the right of the bottom row, the shade of steel blue gradually gets fainter and fainter.
 
-In the original concept, the pinboard concept was to have the design running from bottom left to top right representing the least desirable to the most respectively. However, over time due to time constraints and also to make better use of the whole screen, we chose that it would make more sense to make the pinboard operate purely on a 2-D Axis where preference towards certain tags was determined by its location on the x-axis with preference increasing the further to the right of the axis a tag was placed by the user.
+In the original concept, the pinboard was to have the design running from bottom left to top right representing the least desirable to the most respectively. However, over time due to time constraints and also to make better use of the whole screen, we chose that it would make more sense to make the pinboard operate purely on a 2-D Axis where preference towards certain tags was determined by its location on the x-axis with preference increasing the further to the right of the axis a tag was placed by the user.
 
 The decision was also taken to move the pinboard from the top of the screen to the centre. This was due to its ability to created a divider between the searching components at the top of the page and the hexagonal results that are generated and displayed below.
 
@@ -66,15 +69,15 @@ The decision was also taken to move the pinboard from the top of the screen to t
 
 Many of the original design decisions carried through to the final product. Our key features - the multitude of tags, the highly interactive pinboard, and the use of hexagons to display results - are all present in the final product. They have all experienced minor changes to better suit the formatting of the website and the data - the pinboard is now completely horizontal and resides in the middle of the screen, while the search bar and suggested tags occupy the top third. The hexagons also display slightly different data based on the results returned by the Google Places API. The multi-dimensional search algorithm was largely implemented as envisioned, but some Google Places API limitations prevented the idea to be explored in full. We also included several new features, including a map for the user to choose their location and tips for effective use, as much of the functionality is not immediately apparent upon first visiting the site.
 
-However, several bits of functionality were ultimately not included. One feature that did not make it to the final product was the idea that the hexagons would update as the user dragged tags to the pinboard. This was scrapped due to the complexity of the algorithm and the amount of data being sent to and returned from the Google Places API to generate the best results possible. In addition, due to the required queries, fewer results are displayed than originally intended, with many being truncated by the limit on the number of queries one webpage can request of Google. We decided to keep the result count low to allow for higher-quality results that best match the search terms.
+However, several bits of functionality were ultimately not included. One feature that did not make it to the final product was the idea that the hexagons would update as the user dragged tags to the pinboard. This was discarded due to the complexity of the algorithm and the amount of data being sent to and returned from the Google Places API to generate the best results possible. In addition, due to the required queries, fewer results are displayed than originally intended, with many being truncated by the limit on the number of queries one webpage can request of Google. We decided to keep the result count low to allow for higher-quality results that best match the search terms.
 
 \section*{Analytical Findings}
 
-It is vital to test a system on actual users between design iterations. During the short design lifecycle of our product we performed two small user tests to ensure that we were creating a system that delivered on all of the aspects that we had intended it to. Our first test was performed once we first had a usable build of the system to ensure that the final stages of the creation, which are usually taken up with small visual tweaks, were going to make our product better. We carried out the second batch of testing once we believed we had finished the design of our product. The intention behind the second test was to ensure that we had achieved all that we had set out to and that we had improved on the user experience with the changes we had made since the first tests.
+It is vital to test a system on actual users between design iterations. During the short design lifecycle of our product we performed two small user tests to ensure that we were creating a system that delivered on all of the aspects that we had intended it to. Our first test was performed once we first had a usable build of the system to ensure that the final stages of the creation, which are usually taken up with small visual tweaks, were going to make our product better. We carried out the second batch of testing once we believed we had finished the design of our product. The intention behind the second test was to ensure that we had achieved all that we had set out to and, that we had improved on the user experience with the changes we had made since the first tests.
 
-To ensure that our results were significant we asked the same tasks of the users in both of our experimental designs. We gave them three tasks to perform that between them encompassed all of the key functionality of our application to make sure that we were confident with the performance of every aspect of our design. We wanted to obtain quantitative results to allow for precise comparison between the two sets of data, however we also wanted qualitative data so that we knew what areas our users felt worked best and what areas were least effective as well as any suggestions they had for change. To this end, we took three metrics from each of the three tests we had our users perform; time taken to generate input similar to the desired input, any comments the user had on specific sections of the design and a report of the user’s performance written by whoever carried out the tests which we did not show the user.
+To ensure that our results were significant, we asked the same tasks of the users in both of our experimental designs. We gave them three tasks to perform that, between them, encompassed all of the key functionality of our application to make sure that we were confident with the performance of every aspect of our design. We wanted to obtain quantitative results to allow for precise comparison between the two sets of data, however we also wanted qualitative data so that we knew what areas our users felt worked best and what areas were least effective as well as any suggestions they had for improvement. To this end, we took three metrics from each of the three tests we had our users perform; time taken to generate input similar to the desired input, any comments the user had on specific sections of the design and a report of the user’s performance written by whoever carried out the tests which we did not show the user.
 
-To ensure that the tags used matched real-world usage, some repeatable, representative tasks were devised. Test participants were given no further input then a short sentence intended to duplicate real world scenarios in which we envisage our application being used. The sentences we used to prompt our participants were:
+To ensure that the tags used matched real-world usage, some repeatable, representative tasks were devised. Test participants were given no further input than a short sentence intended to duplicate real world scenarios in which we envisage our application being used. The sentences we used to prompt our participants were:
 
 
 \begin{itemize}
@@ -83,61 +86,90 @@ To ensure that the tags used matched real-world usage, some repeatable, represen
 \item \textbf{Task 3:} “You have friends over when someone suggests going to a restaurant, please find a restaurant that preferably is kosher, but is definitely not American.”
 \end{itemize}
 
-After the  test we asked users to comment on:
+\noindent After the  test we asked users to comment on:
 
 \begin{itemize}
-\item The overall design and aesthetic of the application.
-\item The custom tag generation and the map.
-\item The form in which results are displayed.
-\item The results are shown in Table \ref{experiment-1}
+	\item The overall design and aesthetic of the application.
+	\item The custom tag generation and the map.
+	\item The form in which results are displayed.
 \end{itemize}
+
+\noindent The results are shown in Table \ref{table:experiment-1}
+
 
 \subsection*{Investigation 1}
 
+\begin{itemize}
+\item{User 1:
+\begin{itemize}
+\item{Task 1: 
 
-User 1:
-Task 1: 
 Time taken: 21s
+
 User 1 described the design as ‘interesting, neat, and professional’, though he found the pinboard suspicious, questioning how intuitive it is.
-His performance was poor, and it took two attempts to generate the correct input.
-Task 2:
+His performance was poor, and it took two attempts to generate the correct input.}
+\item{Task 2:
+
 Time taken: 51s
+
 User 1 described the map and the action of dropping the pin to change location as ‘tricky and time-consuming’, suggesting it would be difficult for mobile users. 
-He did not realise he could search for the ‘Thai’ tag, and spent some time questioning how to proceed.
-Task 3:
+He did not realise he could search for the ‘Thai’ tag, and spent some time questioning how to proceed.}
+\item{Task 3:
+
 Time taken: 13s
-User 1 said the result generation was ‘unique and interesting’. It was clear from his speed and efficiency that he had quickly learned to use the system.
 
-User 2:
-Task 1:
+User 1 said the result generation was ‘unique and interesting’. It was clear from his speed and efficiency that he had quickly learned to use the system.}
+\end{itemize}}
+
+\item{User 2:
+\begin{itemize}
+
+\item{Task 1:
+
 Time taken: 30s
+
 User 2 commented that the design was ‘definitely cool’, however, he questioned how useful the ability to score tags negatively would prove. He also suggested to clarify the specification, perhaps moving it to the left side of the screen.
-He read the specification then performed the task perfectly.
-Task 2:
+He read the specification then performed the task perfectly.}
+\item{Task 2:
+
 Time taken: 2m, 13s
+
 User 2 found the custom searching cool, though the map was ‘unclear’.
-He found the map extremely difficult to use, finding his location but not understanding the drag functionality needed to change the location.
-Task 3:
+He found the map extremely difficult to use, finding his location but not understanding the drag functionality needed to change the location.}
+\item{Task 3:
+
 Time taken: 10s
-User 2 suggesting changing some of the metrics offered and questioned how many users would find use in ranking ‘Service speed’ lowly.
-The user was much quicker, understanding the system and using our functionality to generate the specific results.
 
-User 3:
-Task 1:
+User 2 suggested changing some of the metrics offered and questioned how many users would find use in ranking ‘Service speed’ lowly.
+The user was much quicker, understanding the system and using our functionality to generate the specific results.}
+
+\end{itemize}}
+
+\item{User 3:
+\begin{itemize}
+
+\item{Task 1:
+
 Time taken: 1m, 21s
+
 User 3 found that the system was not clearly explained or intuitive, and suggested making the functionality explanation stand out more.
-His first search did not match the task, not understanding the pinboard.
-Task 2:
+His first search did not match the task, not understanding the pinboard.}
+\item{Task 2:
+
 Time taken: 1m, 5s
+
 User 3 liked the tag creation functionality.
-User 3 spent much time on the map, but found the ability to search for tags impressive and intuitive.
-Task 3:
+User 3 spent much time on the map, but found the ability to search for tags impressive and intuitive.}
+\item{Task 3:
+
 Time taken: 11s
+
 User 3 commented that the highlight overlay was ‘odd’ and suggested making the hover effect fade more quickly.
-He was clearly interested with the iconic visual design decisions, however, questioned whether or not it was too bold.
+He was clearly interested with the iconic visual design decisions, however, questioned whether or not it was too bold.}
 
+\end{itemize}}
+\end{itemize}
 
-The results of this first experiment are shown in Table \ref{table:experiment-1}.
 
 \begin{table}[H]
 \centering
@@ -156,60 +188,105 @@ From the qualitative data we received in our first round of testing, we found th
 
 We used the data gathered from our testing in the next iteration of the design as guidelines for how the application could be improved upon. To this end we first added “plus” and “minus” signs on either side of the pinboard and added a colour gradient to match the results displayed to the background, which we believed illustrates the functionality more clearly. We then edited the on-hover effects for the hexagon-based result display, culminating in what we believe to be a more visually smooth experience. We also changed the positioning and content of the instructions in the top third to make them more illustrative of the functionality and more prominent, aiding the user experience and hopefully reducing the confusion that some of our test participants suffered.
 
-The main item we changed was updating the pinboard, originally it had a very bland design, so much so that some of our test participants did not even notice it was there. We enlarged it, made the “drag items here” larger, added a gradient background and ‘+’ and ‘-’ text to make the positioning of the elements of obvious. 
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.2]{oldScreenshot.png}
+		\caption{Our old design before changes were made}
+		\label{figure:old-design}
+	\end{center}
+\end{figure}
 
-We rearranged all of the sections to aid with the work-flow that a user will undertake when interacting with our application, our intention was to make interaction with our application with our application more natural. We believed it was more intuitive for users to first look at the suggestions before searching for missing items rather than the opposite, as our previous iteration had been.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.2]{superNewScreenshot.png}
+		\caption{New design after changes}
+		\label{figure:new-design}
+	\end{center}
+\end{figure}
 
-We also enlarged and reworded our functionality explanation. This was an element of the design that raised much debate, it had not been in the original wireframes as we had not envisaged it as being necessary although our testing made it’s necessity evident. As we were limited in the amount of time we had to plan and develop the application we were not able to implement it as effectively as perhaps we should have. Since these screenshots were taken we have enlarged the text yet again and added more description, in particular of how the map works.
+The above are images to display the changes we made to the design of our application. 
 
-To ensure that our results were significant and allow for comparison between them, we gave our second group of testers the same scenarios and asked them for comments on the same sections as we did our first group. We believed that the changes we had made would lead to a reduction in the time needed for our participants to complete the tasks and that their comments would be in line with our expectation that our changes had made the system easier to use and made the work-flow transition smoother and more naturally.
+The main item we changed was updating the pinboard, originally it had a very bland design, so much so that some of our test participants did not even notice it was there. We enlarged it, made the “drag items here” message larger, added a gradient background and ‘+’ and ‘-’ text to make the positioning of the elements of obvious. 
+
+We rearranged all of the sections to aid with the work-flow that a user will undertake when interacting with our application, our intention was to make interaction with our application more natural. We believed it was more intuitive for users to first look at the suggestions before searching for missing items rather than the opposite, as our previous iteration had been.
+
+We also enlarged and reworded our functionality explanation. This was an element of the design that raised much debate, it had not been in the original wireframes as we had not envisaged it as being necessary although our testing made its necessity evident. As we were limited in the amount of time we had to plan and develop the application, we were not able to implement it as effectively as perhaps we could have. Since these screenshots were taken, we have enlarged the text yet again and added more description, in particular of how the map works.
 
 
 \subsection*{Experiment 2}
 
-User 1:
-Task 1: 
+To ensure that our results were significant and allow for comparison between them, we gave our second group of testers the same scenarios and asked them for comments on the same sections as we did our first group. We believed that the changes we had made would lead to a reduction in the time needed for our participants to complete the tasks and that their comments would be in line with our expectation that our changes had made the system easier to use and made the work-flow transition smoother and more naturally.
+
+\begin{itemize}
+
+\item{User 1:
+
+\begin{itemize}
+\item{Task 1:
+
 Time taken: 23s
+
 User 1 was impressed by the design of the application and described it as “professional” and “wonderful”.
-User 1 was very quick to pick-up the system’s functionality and seemed to intuitively grasp the drag-and-drop tags and the positioning on the pinboard.
-Task 2:
+User 1 was very quick to pick-up the system’s functionality and seemed to intuitively grasp the drag-and-drop tags and the positioning on the pinboard.}
+\item{Task 2:
+
 Time taken: 43s
+
 User 1 described the drag-and-drop functionality, unprompted, as “smooth” and said that he felt the map “worked cleanly”.
-User 1’s interaction with the map was quick and precise, they were clearly comfortable with the google maps interface. 
-Task 3:
+User 1’s interaction with the map was quick and precise, they were clearly comfortable with the google maps interface.}
+\item{Task 3:
+
 Time taken: 12s
-User 1 had some issues with the format of the results display, although they did describe the layout as “cool”, they suggested we change the on-click effects of the results and prevent more than one hexagon from being exploded at a time.
 
-User 2:
-Task 1:
+User 1 had some issues with the format of the results display, although they did describe the layout as “cool”, they suggested we change the on-click effects of the results and prevent more than one hexagon from being exploded at a time.}
+\end{itemize}}
+
+\item{User 2:
+\begin{itemize}
+\item{Task 1:
+
 Time taken: 54s
+
 User 2 described the gradient background of the pinboard as “word art-y”, although they were liked the professional look of the vertical-banner.
-It was clear that user 2 struggled with the dragging and was not comfortable using a touchpad rather than a mouse to perform the task, which raises issues we had not considered.
-Task 2:
+It was clear that user 2 struggled with the dragging and was not comfortable using a touchpad rather than a mouse to perform the task, which raises issues we had not considered.}
+\item{Task 2:
+
 Time taken: 67s
+
 User 2 described the functionality as “fairly standard stuff for a professional web-app” although they described the dragging as “unintuitive”, though this may have been down to the input device they were using. 
-As with task 1, it was clear that user 2 also had trouble with dragging the pin on the map using the trackpad.
-Task 3:
+As with task 1, it was clear that user 2 also had trouble with dragging the pin on the map using the trackpad.}
+\item{Task 3:
+
 Time taken: 20s
+
 User 2 described the animation of the results as “nice” although claimed that they felt the text was too small.
-It was clear that given some time to adapt, user 3 had become very at ease using the system.
+It was clear that given some time to adapt, user 3 had become very at ease using the system.}
+\end{itemize}}
 
-User 3:
-Task 1:
+\item{User 3:
+\begin{itemize}
+\item{Task 1:
+
 Time taken: 10s
+
 User 3 was fond of the colour scheme but admitted to not liking the functionality explanation, describing it as “bland”.
-User 3 is clearly very tech savvy, and immediately recognised the basic drag-and-drop functionality, handling it with ease.
-Task 2:
+User 3 is clearly very tech savvy, and immediately recognised the basic drag-and-drop functionality, handling it with ease.}
+\item{Task 2:
+
 Time taken: 29s
+
 User 3 liked the functionality and described it as “natural” although they also said they believed the map’s dragging functionality to be “not obvious”
-User 3 was comfortable with the map and had clearly used google maps before although they too struggled with the touchpad and dragging the small pin object.
-Task 3:
+User 3 was comfortable with the map and had clearly used google maps before although they too struggled with the touchpad and dragging the small pin object.}
+\item{Task 3:
+
 Time taken: 11s
+
 User 3 said that the hexagons were “an interesting decision” although they were very positive about the colour scheme.
-very similar performance to in task one, it is clear they did not need to ‘learn’ the system as other users did.
+very similar performance to in task one, it is clear they did not need to ‘learn’ the system as other users did.}
+\end{itemize}}
 
+\end{itemize}
 
-The results are shown in Table \ref{table:experiment-2}.
 
 \begin{table}[H]
 \centering
@@ -226,15 +303,44 @@ The results are shown in Table \ref{table:experiment-2}.
 
 \subsection*{Discussion of Findings}
 
-In analysing the quantitative data some patterns were evident. First, as we had predicted, the times taken per task decreased, as evidence best by the difference in average times, for all tasks, the testers of the earlier implementation took 46.4 seconds to complete a task where-as the participants in the test on the later implementation took 29.9 seconds, that is they were 35\% faster. However, averages of all of the tests as a single data set is not very instructive as the tests required very different inputs and therefore take varying lengths of time to complete. To remedy this, it is more significant to compare the difference in the averages per task. In tasks 1 and 2, the participants in the second test group performed better (where better is measured as faster) on average than those in the first test group, however in the final task the second group performed over 20\% slower than the first. 
+In analysing the quantitative data some patterns were evident. Firstly, as we had predicted, the times taken per task decreased, as evidence best by the difference in average times, for all tasks, the testers of the earlier implementation took 46.4 seconds to complete a task where-as the participants in the test on the later implementation took 29.9 seconds, that is they were 35\% faster. However, averages of all of the tests as a single data set is not very instructive as the tests required very different inputs and therefore take varying lengths of time to complete. To remedy this, it is more significant to compare the difference in the averages per task. In tasks 1 and 2, the participants in the second test group performed better (where better is measured as faster) on average than those in the first test group, however in the final task the second group performed over 20\% slower than the first. 
 
-To deal with the discrepancies it was clear that the best way to measure the result was to look for other metrics. Our tasks were designed such that tasks 1 and 3 were very similar, so similar infact that we hypothesised that the only difference in timings was due to the time taken for participants to familiarise themselves with application’s functionality. For task 1, users had to drag three tags onto the pinboard and generate results where-as for task 3 users had to drag only two tags onto the pinboard, with one of them having to be typed into a text-field to generate it. From our results we extracted a measurement of the time taken for participants to familiarise themselves with the system by calculating the time taken for users to complete task 1 minus the time taken for them to complete task 3. If the difference between completion of task 3 and task 1 is the time taken for users to familiarise themselves, then that difference divided by the time taken to complete task 1 will give a ratio of time taken by a participant to familiarise themselves with our system. We called this metric the ‘ratio of time to familiarise’ and it shows a very clear improvement when comparing test group A and B. 
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.5]{graph.png}
+		\caption{Graph of time taken per user and task}
+		\label{figure:graph}
+	\end{center}
+\end{figure}
+
+To deal with the discrepancies, it was clear that the best way to measure the result was to look for other metrics. Our tasks were designed such that tasks 1 and 3 were very similar, so similar in fact that we hypothesised that the only difference in timings was due to the time taken for participants to familiarise themselves with application’s functionality. For task 1, users had to drag three tags onto the pinboard and generate results whereas for task 3 users had to drag only two tags onto the pinboard, with one of them having to be typed into a text-field to generate it. From our results, we extracted a measurement of the time taken for participants to familiarise themselves with the system by calculating the time taken for users to complete task 1 minus the time taken for them to complete task 3. If the difference between completion of task 3 and task 1 is the time taken for users to familiarise themselves, then that difference divided by the time taken to complete task 1 will give a ratio of time taken by a participant to familiarise themselves with our system. We called this metric the ‘ratio of time to familiarise (RTTF)’ and it shows a very clear improvement when comparing test group A and B. The average RTTF of the first test group was 63.7\%, that is, given the assumptions, over half of their time was spent understanding the system rather than using it. The average RTTF of the test group for the later iteration was down to 30.8\%, that is our test participants needed less than half as much time familiarising themselves with our second iteration than they did with our first. This goes a long way to confirming our hypothesis that the changes we performed made our application more intuitive to use.
+
+Our tests were not as accurate as they could have been owing to time constraints. The sample size was small and this will have an affect on how reliable the results we obtained will be.
 
 
+\begin{table}[]
+
+\begin{adjustbox}{max width=\textwidth}
+\centering
+\begin{tabular}{|p{1.8cm}|rrrr|rrrr|}
+\hline
+{\ul \textbf{Task}}                   & \multicolumn{1}{l|}{{\ul User 1a}} & \multicolumn{1}{l|}{{\ul User 2a}} & \multicolumn{1}{l|}{{\ul User 3a}} & \multicolumn{1}{l|}{{\ul Average}} & \multicolumn{1}{l|}{{\ul User 1b}} & \multicolumn{1}{l|}{{\ul User 2b}} & \multicolumn{1}{l|}{{\ul User 3b}} & \multicolumn{1}{l|}{{\ul Average}} \\ \hline
+Task 1                                & 21                                 & 30                                 & 81                                 & 44                                 & 23                                 & 44                                 & 10                                 & 25.66666667                        \\ \cline{1-1}
+Task 3                                & 13                                 & 10                                 & 11                                 & 11.33333333                        & 12                                 & 20                                 & 11                                 & 14.33333333                        \\ \cline{1-1}
+Time to Familiarise (Task 3 - Task 1) & 8                                  & 20                                 & 70                                 & 32.66666667                        & 11                                 & 24                                 & -1                                 & 11.33333333                        \\ \cline{1-1}
+\textbf{RTTF (TTF/Task 1)}            & 0.380952381                        & 0.6666666667                       & 0.8641975309                       & \textbf{0.6372721928}              & 0.4782608696                       & 0.5454545455                       & -0.1                               & \textbf{0.3079051383}              \\ \hline
+\end{tabular}
+
+\end{adjustbox}
+
+\caption{RTTF results}
+\label{rttf}
+
+\end{table}
 
 \section*{User Guide}
 
-The user starts by dragging tags to either side of the pinboard. They can drag as many as they like to create their perfect search. The right half of the pinboard represents desirable tags, and the further right the tag is, the more weight the algorithm will give the tag. Tags on the left, on the other hand, are considered undesirable, and the algorithm will rank restaurants that match these tags lower than other restaurants. We have provided several suggested tags to find a specific cuisine or a good metric by which to rank the eateries. For example, a user can search for any ‘Indian’ and any ‘Chinese’ restaurants, with the metrics ‘Near’ and ‘Halal’. If the suggested tags do not encompass all the search terms the user requires, they can add their own by using the search bar and dragging their new custom tags to the pinboard. Any tags can be removed by dragging them off the pinboard. Pressing the ‘Generate Results’ button will start the algorithm, searching for the perfect restaurants and displaying the results as color-coded hexagons. The more blue the hexagon, the better it matches the search tags, and the more white, the worse it matches. Clicking on a result hexagon will expand it and offer options to find it on a map and also a link to order from the restaurant. By default, the algorithm will return results near where we think you are, but in case we are incorrect or if you are planning ahead for a meal, you can open the map and drag the pin to the desired location. Clicking the ‘Get Location’ button will make the website try to retrieve your location. 
+The user starts by dragging tags to either side of the pinboard. They can drag as many as they like to create their perfect search. The right half of the pinboard represents desirable tags, and the further right the tag is, the more weight the algorithm will give the tag. Tags on the left, on the other hand, are considered undesirable, and the algorithm will rank restaurants that match these tags lower than other restaurants. We have provided several suggested tags to find a specific cuisine or a good metric by which to rank the eateries. For example, a user can search for any ‘Indian’ and any ‘Chinese’ restaurants, with the metrics ‘Near’ and ‘Halal’. If the suggested tags do not encompass all the search terms the user requires, they can add their own by using the search bar and dragging their new custom tags to the pinboard. Any tags can be removed by dragging them off the pinboard. Pressing the ‘Generate Results’ button will start the algorithm, searching for the perfect restaurants and displaying the results as color-coded hexagons. The more blue the hexagon, the better it matches the search tags, and the more white, the worse it matches. Clicking on a result hexagon will change its colour and offer options to find it on a map and also a link to the restaurant’s website. Where a website is not available, then an alert will appear on the screen with a phone  number allowing users an alternative method of ordering. By default, the algorithm will return results near where we think you are, but in case we are incorrect or if you are planning ahead for a meal, you can open the map and drag the pin to the desired location. Clicking the ‘Get Location’ button will make the website try to retrieve your location. 
 
 \section*{Task Divisions}
 
