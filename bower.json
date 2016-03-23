@@ -1,0 +1,33 @@
+{
+  "name": "120degrees",
+  "homepage": "https://github.com/SCOTPAUL/120degrees",
+  "authors": [
+    "paul <paul.cowie@ntlworld.com>"
+  ],
+  "description": "A fun webapp for finding places to eat!",
+  "main": "src/html/index.html",
+  "moduleType": [],
+  "keywords": [
+    "food",
+    "maps",
+    "interactive",
+    "hexagon",
+    "glasgow"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "papaparse": "^4.1.2",
+    "jquery": "^2.2.2",
+    "pure": "^0.6.0",
+    "react": "^0.14.7",
+    "spin.js": "^2.3.2"
+  }
+}

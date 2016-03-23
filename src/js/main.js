@@ -1,4 +1,4 @@
-﻿var GOOGLE_MAPS_API_KEY = "AIzaSyDtHSNoJ5Ua1mHgdG_1pAX_RwBWvps_8ms";
+﻿var GOOGLE_MAPS_API_KEY = "PUT_GOOGLE_MAPS_API_KEY_HERE"
 var map;
 var pos_marker;
 
